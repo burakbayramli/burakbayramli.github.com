@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Materyel Mekaniği - 4
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {inlineMath: [["$","$"]]}
+      });
+    MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+      MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+        cancel: ["Extension","cancel"],
+        bcancel: ["Extension","cancel"],
+        xcancel: ["Extension","cancel"],
+        cancelto: ["Extension","cancel"]
+      });
+    });
+    </script>
+   <script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full">
+   </script>
+   <link rel="stylesheet" type="text/css" media="screen" href="https://burakbayramli.github.io/css/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+          crossorigin="anonymous"></script>  
+  </head>
+    <body>
+      <div id="header_wrap" class="outer">
+        <header class="inner">
+          <h1 id="project_title">
+            <a href="https://burakbayramli.github.io" style="text-decoration:none; color:inherit;">dersblog</a>
+          </h1>
+          <h2 id="project_tagline"></h2>          
+        </header>
+      </div>
+      <div id="main_content_wrap" class="outer">        
+        <section id="main_content" class="inner">
+        <h1>Materyel Mekaniği - 4
+</h1>
+
+<p>Potansiyel Enerji ve Denge</p>
+<p>İlk önce denge bağlamında potansiyel enerjinin ne demek olduğunu işleyelim.</p>
+<p>Potansiyel enerji $\Pi$ sistemin stabilitesi ile alakalıdır. Mesela alttaki
+resim stabilite konusunu işleyen her ders kitabında vardır, bir kapta duran topu
+aldım, yukarı doğru çıkatıp (bordo renk) aşağı bıraktım, top kabın dibine gidip
+orada kalacaktır (kırmızı renk). </p>
+<p><img alt="" src="phy_020_strs_04_01.jpg" /></p>
+<p>Yani top ilk denge konumuna dönecektir, ve o durumda potansiyel enerjisi minimum
+olmuştur deriz ve bu denge stabil bir dengedir.</p>
+<p><img alt="" src="phy_020_strs_04_02.jpg" /></p>
+<p>İkinci durumda topu orta noktada sola taşırız, top orada kalır, bu yeni
+bir denge noktasıdır, $\Pi$ değişmemiştir, burada nötr bir denge vardır.</p>
+<p><img alt="" src="phy_020_strs_04_03.jpg" /></p>
+<p>Üçüncü durumda ters kavisli bir yüzey var, top üst orta noktadan başlıyor
+diyelim (orada durması zor olsa da), topu yine alıp sola taşıyorum, top aşağı
+düşecektir. Üstteki durum potansiyel enerjisinin maksimum olduğu bir durumdur,
+sistem stabil değildir. Rayleigh-Ritz yönteminin amacı (potansiyel enerjinin
+minimum olduğu) stabil denge durumunu hedefleyerek bir yaklaşık çözüme
+ulaşmaktır.</p>
+<p>Bunu nasıl yaparız? Daha önce belirttiğimiz potansiyel enerjinin iki bileşeni
+var, ilki sistemin toplam iç gerilim (deformasyon) enerjisi. Gerilim enerji
+<em>yoğunluğu</em> $\overline{U}$ genel olarak bir materyelin stres-gerilim eğrisinin
+altındaki alan olarak hesaplanabilir.</p>
+<p><img alt="" src="phy_020_strs_04_04.jpg" /></p>
+<p>Mesela üstteki gibi stres $\sigma_{ij}$ ve gerilim $\epsilon_{ij}$ arasındaki
+bir eğriyi düşünelim, bu eğrinin altında kalan alan, yani entegral hesabı 
+gerilim enerji yoğunluğunu verir.</p>
+<p>$$
+\overline{U} = \int_{0}^{\epsilon_{ij}} \sigma_{ij} \mathrm{d} \epsilon_{ij}
+$$</p>
+<p>Kolaylaştırıcı bir faktör, bizim bu derste kullanacağımız maddeler lineer
+elastik, yani stres-gerilim eğrisi alttaki gibi,</p>
+<p><img alt="" src="phy_020_strs_04_05.jpg" /></p>
+<p>Bu durumda "eğri" yani çizgi altındaki alan basit bir üçgen hesabı,</p>
+<p>$$
+\overline{U} = \frac{1}{2} \sigma_{ij} \epsilon_{ij}
+$$</p>
+<p>Fakat bu sadece tek bir boyutu halletti, mesela üstteki örnek $e_1$ yönündeki
+bir esnemeyi temsil ediyor olabilirdi, fakat 3 boyutlu ortamda elimizde daha
+fazla bileşen olduğunu biliyoruz, $\sigma_{11}$ haricinde $\sigma_{22}$ var,
+$\sigma_{33}$ var, $\sigma_{12}$, $\sigma_{23}$, vs.. Tüm stres/gerilim
+eşleri için [2, Ders 16],</p>
+<p>$$
+\overline{U} = \frac{1}{2} \sum_{i,j=1}^{3} \sigma_{ij} \epsilon_{ij}
+$$</p>
+<p>Toplamı açarsak,</p>
+<p>$$
+= \frac{1}{2} (\sigma_{11}\epsilon_{11} + \sigma_{22}\epsilon_{22}  +
+\sigma_{33}\epsilon_{33} + \sigma_{12}\epsilon_{12} + \sigma_{23}\epsilon_{23} +
+\sigma_{13}\epsilon_{13} + \sigma_{33}\epsilon_{33} + \sigma_{23}\epsilon_{23} +
+\sigma_{32}\epsilon_{32} )
+$$</p>
+<p>Son ifadeyi daha basitleştirmek mümkün, $\sigma$ ve $\epsilon$'un simetrik
+olduğunu unutmayalım,</p>
+<p>$$
+\overline{U} = \frac{1}{2} (\sigma_{11}\epsilon_{11} + \sigma_{22}\epsilon_{22}  +
+\sigma_{33}\epsilon_{33} + 2 \sigma_{12}\epsilon_{12} +
+2 \sigma_{13}\epsilon_{13} + 2 \sigma_{23}\epsilon_{23} )
+$$</p>
+<p>Üsttekileri mühendislik gerilimi $\gamma_{ij} = 2 \epsilon_{ij}$ ile temsil
+etmek mümkün,</p>
+<p>$$
+\overline{U} = \frac{1}{2} (\sigma_{11}\epsilon_{11} + \sigma_{22}\epsilon_{22}  +
+\sigma_{33}\epsilon_{33} + \sigma_{12}\gamma_{12} +
+\sigma_{13}\gamma_{13} + \sigma_{23}\gamma_{23} )
+$$</p>
+<p>Eksenel Yükleme (Axial Loading)</p>
+<p>Euler-Bernoulli kiriş formülasyonu sadece bükülmenin sebep olduğu deformasyonu
+hesaba kattı, bunu yaparken nötr eksen üzerindeki eksenel deformasyonu yok saydı
+[3, 8.4]. Euler-Bernoulli modelini eksenel yatay deformasyonu hesaba katacak
+şekilde genişletmek mümkündür, fakat, belki de bu iyi haber, ufak deformasyon
+önkabulü sayesinde eksenel yük ve bükülme deformasyonları birbirinden
+bağlantısız (uncoupled) hale gelir, eksenel yük sadece eksenel deformasyonu,
+yatay yük sadece yatay deformasyonu etkiler.</p>
+<p><img alt="" src="phy_020_strs_04_06.jpg" /></p>
+<p>Diğer faraziyeler Euler-Bernoulli modeline benzer, düzlem bölümler düzlem kalır,
+Poisson oranı etkileri yok sayılır, ve yatay yer değişimi $u_1$ pürüzsüz bir
+fonksiyondur. Farklı bir resmi [2, Ders 15] eklersek,</p>
+<p><img alt="" src="phy_020_strs_04_08.jpg" /></p>
+<p>Bu faraziyelerle modeli oluşturalım; üstteki resme bakarsak $u_1 = u_1(X_1)$, ve
+pozisyon vektör fonksiyonu olarak,</p>
+<p>$$
+x = \left[\begin{array}{c}
+X_1 + u_1 \\ X_2 \\ X_3
+\end{array}\right]
+$$</p>
+<p>Bu durumda yer değişim fonksiyonu</p>
+<p>$$
+u = x - X = \left[\begin{array}{c}
+u_1 \\ 0 \\ 0
+\end{array}\right]
+$$</p>
+<p>Hatırlarsak yaklaşık olarak gerilim tensörü</p>
+<p>$$
+\epsilon = \frac{1}{2} (\nabla u + \nabla u^T )
+$$</p>
+<p>Gradyanlar ile hesabı yaparsak sadece $\epsilon_{11}$'in sıfır olmadığını
+görüyoruz,</p>
+<p>$$
+\epsilon = \left[\begin{array}{ccc}
+\frac{\mathrm{d} u_1}{\mathrm{d} X_1} &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 
+\end{array}\right]
+\qquad (1)
+$$</p>
+<p>Bize gerekli diferansiyel denklemi kuvvet dengelerine bakarak ortaya
+çıkartabiliriz. Şimdi kirişin $\mathrm{d} X_1$ genişliğindeki ufak bir parçasına
+odaklanalım,</p>
+<p><img alt="" src="phy_020_strs_04_07.jpg" /></p>
+<p>Bu parçanın sol ve sağındaki kuvvetlere bakarsak üstteki resim ortaya çıkar.</p>
+<p>Oklar sola ya da sağa doğru gösterildi çünkü mesela $\sigma_{11}$ ve
+$\sigma_{11} + \frac{\partial \sigma_{11}}{\partial X_1} \mathrm{d} X_1$'in
+birbirini dengeleyeceklerini / birbirlerine karşı ortaya çıktıklarını
+biliyoruz, sağa doğru olan $p$ zaten dışarıdan uygulanan eksenel kuvvet.
+$\frac{\partial \sigma_{11}}{\partial X_1}$ kullanımı $\sigma_{11}$'in
+$X_1$'e oranla değişim hesabı için kullanıldı, bu oranı $X_1$'deki
+olan değişimle çarpınca (örnekte $\mathrm{d} X_1$) tabii ki ufak parçanın sağındaki
+$\sigma_{11}$ eki ortaya çıkıyor, bunu $\sigma_{11}$'e topluyoruz.</p>
+<p>Parçanın sol ve sağındaki alan büyüklüğü benzer şekilde, solda $A$ varsa
+$A$'nin $X_1$'e oranlı değişimi çarpı $X_1$ değişimi bize parçanın sağındaki
+alan büyüklük ekini veriyor. </p>
+<p>$X_1$ ekseni bazındaki denge denklemi o zaman alttaki gibi olur, stres hesabı
+kuvvet bölü birim alan olduğu için kuvveti elde etmek için stres çarpı alan
+gerekeceğini hatırlayalım, ayrıca $p$ kuvveti birim $X_1$ bazlı alınıyor,
+o zaman $p \mathrm{d} X_1$ kullanmak gerekir,</p>
+<p>$$ \sum F_{X_1} = - \sigma_{11} A +
+\left( \sigma_{11} + \frac{\partial \sigma_{11}}{\partial X_1} \mathrm{d} X_1  \right)
+\left( A + \frac{\partial A}{\partial X_1} \mathrm{d} X_1  \right) + p \mathrm{d} X_1 = 0
+$$</p>
+<p>Formülü açarsak</p>
+<p>$$
+-\sigma_{11} A  + \sigma_{11} A  +
+\sigma_{11} \frac{\partial A}{\partial X_1} \mathrm{d} X_1 +
+A \frac{\partial \sigma_{11}}{\partial X_1} \mathrm{d} X_1 +
+\frac{\partial A}{\partial X_1} \frac{\partial \sigma_{11}}{\partial X_1} \mathrm{d} X_1^2 +
+p \mathrm{d} X_1 = 0
+$$</p>
+<p>$\sigma_{11} A$ terimleri iptal olur,</p>
+<p>$$
+\sigma_{11} \frac{\partial A}{\partial X_1} \mathrm{d} X_1 +
+A \frac{\partial \sigma_{11}}{\partial X_1} \mathrm{d} X_1 +
+\frac{\partial A}{\partial X_1} \frac{\partial \sigma_{11}}{\partial X_1} \mathrm{d} X_1^2 +
+p \mathrm{d} X_1 = 0
+$$</p>
+<p>$\mathrm{d} X_1$ dışarı çekilir, ve sağda sıfır olduğu için iptal edilebilir,</p>
+<p>$$
+\sigma_{11} \frac{\partial A}{\partial X_1}  +
+A \frac{\partial \sigma_{11}}{\partial X_1}  +
+\frac{\partial A}{\partial X_1} \frac{\partial \sigma_{11}}{\partial X_1} \mathrm{d} X_1 +
+p  = 0
+$$</p>
+<p>Hala basitleştirme mümkün, dikkat edersek $\mathrm{d} X_1$ terimini kullandık ve
+ona "çok küçük bir parça" dedik. Bu parçayı sonsuz küçültürsek, yani
+limiti alırsak, ki $\mathrm{d} X \to 0$, o zaman üstteki formülde üçüncü terim
+yokolur,</p>
+<p>$$
+\sigma_{11} \frac{\partial A}{\partial X_1}  +
+A \frac{\partial \sigma_{11}}{\partial X_1}<br />
+p  = 0
+$$</p>
+<p>Daha kısa bir formüle ulaştık. Fakat bize lazım olan yer değişimi, üstteki
+formülde bu yok. Oraya ulaşmaya çalışalım. Dikkat edersek üstteki formülde
+ilk iki terim sanki Calculus'ta çarpım kuralının açılmış haline benziyor,
+o zaman o kuralı ters yönde işletirsek, yani gruplama amaçlı geriye gidersek,</p>
+<p>$$
+\frac{\partial }{\partial X_1} (\sigma_{11} A ) + p = 0
+$$</p>
+<p>Şimdi $\sigma_{11} = E \epsilon_{11}$ formülünü hatırlayalım, bu nereden geldi?
+Elimizde bir tekeksenel yük var, o zaman en baz stres-gerilme ilişkisi geçerli
+olur, yerine koyarsak,</p>
+<p>$$
+\frac{\partial }{\partial X_1} (E \epsilon_{11} A ) + p = 0
+$$</p>
+<p>Peki $\epsilon_{11}$ nedir? Bu büyüklüğü (1)'de gördük, $\epsilon$'un tek sıfır
+olmayan öğesi $\epsilon_{11}$ ve orada $\frac{\mathrm{d} u_1}{\mathrm{d} X_1}$ değeri
+var. Bunu üstteki formüle koyalım,</p>
+<p>$$
+\frac{\partial }{\partial X_1} \left( E A \frac{\mathrm{d} u_1}{\mathrm{d} X_1} \right) + p = 0
+$$</p>
+<p>Böylece içinde yer değişimi içeren bir formül elde etmiş oldum, $u_1$ yer
+değişimidir.</p>
+<p>Bu denklemi artık çözüm için kullanabiliriz. Tasarımcı olarak biz Young'in
+Genliği $E$'yi biliriz, kirişin herhangi bir noktasındaki satıhsal alan $A$'yi
+biliriz, kirişe uygulanan yük $p$'yi biliriz, tüm bunları kullanarak yer değişim
+$u_1$'i üstteki formülle bulabiliriz. Tek bilinmeyen $u_1$ çünkü.</p>
+<p>Şimdi bu noktada bazı püf noktalar ortaya çıkıyor; çünkü eğer $E,A$ büyüklükleri
+$X_1$'in fonksiyonu iseler çözüm daha karmaşık hale gelebilir çünkü üstteki
+formülde dış türev $X_1$'e göre. Fakat şimdiye kadar bu derste $X_1$'e bağlı bir
+$E$ görmedik, yani Young'in Genliği kirişin her noktasında aynı, özetle sabit.
+Sabit ise $E$ diferansiyelin dışına alınabilir. $A$ aynı şekilde. Eğer $A$
+değişken ise o zaman Calculus çarpım kuralı uygularız.</p>
+<p>O zaman iki senaryo şöyle olabilir, $E$ sabit ama $A$ değil,</p>
+<p>$$
+E \frac{\partial A}{\partial X_1} \frac{\partial u_1}{\partial X_1} +
+EA \frac{\partial^2 u_1}{\partial X_1} + p = 0
+$$</p>
+<p>Hem $E$ hem $A$ sabit,</p>
+<p>$$
+E A \frac{\partial^2 u_1}{\partial X_1} + p = 0
+$$</p>
+<p>Elastiklik Denge Denklemleri</p>
+<p><img alt="" src="equilibrium_stress2.jpg" /></p>
+<p><img alt="" src="equilibrium_stress1.jpg" /></p>
+<p>[devam edecek]</p>
+<p>Kaynaklar</p>
+<p>[1] Petitt, <em>Intro to the Finite Element Method</em>, University of Alberta,
+    <a href="https://www.youtube.com/watch?v=2iUnfPRk6Ro&list=PLLSzlda_AXa3yQEJAb5JcmsVDy9i9K_fi">https://www.youtube.com/watch?v=2iUnfPRk6Ro&amp;list=PLLSzlda_AXa3yQEJAb5JcmsVDy9i9K_fi</a></p>
+<p>[2] Petitt, <em>Intro to the Continuum Mechanics</em>, University of Alberta,
+    <a href="https://www.youtube.com/playlist?list=PLLSzlda_AXa3N5jaDART7kimBlYz1dFnX">https://www.youtube.com/playlist?list=PLLSzlda_AXa3N5jaDART7kimBlYz1dFnX</a></p>
+<p>[3] Adeeb, <em>Introduction to Solid Mechanics</em>
+    <a href="https://engcourses-uofa.ca/books/introduction-to-solid-mechanics/">https://engcourses-uofa.ca/books/introduction-to-solid-mechanics/</a></p>
+<p>[4] Bhavikatti, <em>Finite Element Analysis</em>    </p>
+<p>[5] Khennane, <em>Introduction to Finite Element Analysis Using MATLAB and Abaqus</em></p>
+          <br/><a href="../index.html">Yukarı</a>
+        </section>          
+      </div>
+    </body>
+</html>
