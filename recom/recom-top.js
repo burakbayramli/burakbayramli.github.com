@@ -96,7 +96,7 @@ function show_picks() {
     out = "";
     out += "<h5>Picks</h5>"
     Object.keys(cook['movies']).forEach(function(key) {
-	out += "<a href=''>" + key + `</a><p class='remove'><a onclick='remove("${key}")' href='#'>Remove</a></p>`
+	out += "<p class='remove'><a href=''>" + key + `</a><a onclick='remove("${key}")' href='#'>Remove</a></p>`
     })      
     document.getElementById("picks").innerHTML = out;
 
@@ -172,3 +172,6 @@ function recommend(page) {
     
     document.getElementById("recommendations").innerHTML = out;
 }
+
+
+
