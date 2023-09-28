@@ -1,16 +1,15 @@
-<!DOCTYPE html>
 <html>
   <head>
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-   <script type="text/javascript"
-   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full">
-   </script>
-   <link rel="stylesheet" type="text/css" media="screen" href="https://burakbayramli.github.io/css/style.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
-          crossorigin="anonymous"></script>  
-  </head>
-    <body>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full">
+    </script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://burakbayramli.github.io/css/style.css">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+                    crossorigin="anonymous"></script>  
+    </head>
+    <body onload='show_picks()'>
       <div id="header_wrap" class="outer">
         <header class="inner">
           <h1 id="project_title">
@@ -21,33 +20,40 @@
       </div>
       <div id="main_content_wrap" class="outer">        
         <section id="main_content" class="inner">
+
+          <h2>Recommender</h2>
           
-          <h2>How It Works</h2>
-
-          <p>Recommender system has become a rising topic as we demand
-          more customized contents push to our daily feeds. I guess we
-          are all familiar with the recommended videos on YouTube, and
-          we are all — more than once — the victims of late-night
-          Netflix binge watching.</p>
-
-          <p>There are two popular methods in recommender system,
-          collaborative based filtering and content based
-          filtering. Content based filtering makes predictions of what
-          the audience is likely to prefer based on the content
-          properties, e.g. genre, language, video length. Whereas
-          collaborative filtering predicts based on what other similar
-          users also prefer. As the result, collaborative filtering
-          method is leaning towards instance based learning and
-          usually applied by large companies with huge amount of data
-          at hand.</p>
-
-          <P>In this article, I will focus on collaborative based
-          filtering and briefly introduce how to make movie
-          recommendation using two algorithms that fall into this
-          category, K Nearest Neighbour (KNN) and Singular Value
-          Decomposition (SVD)</p>
+          <table id="recomtopnav" border="0"><tr>
+            <td><a href="/static/recom/recom.html">Home</a></td>
+            <td><a href='#' id="BUTTONDOWNLOAD">Export</a></td>
+            <td><a href='set.html' >Import</a></td>
+          </tr></table>
           
+          <form autocomplete="off">
+            <div class="autocomplete" style="width:300px;">
+              <table border=0><tr>
+                <td><input id="myInput" type="text" name="myCountry" placeholder="Movie"/></td>
+                <td><input id="myRating" size="4" type="text" name="myRating"  placeholder="1-5"/></td>
+                <td><button onclick="add_movie()">Add</button></td>
+              </tr></table>
+            </div>
+          </form>
+
+          <div id="picks">
+          </div>
+
+          <p>
+            <button onclick="recommend(0)">Recommend</button>
+          </p>
+
+          <script src="recom-bot.js"></script>      
+
+          <div id="recommendations">
+          </div>
+
+
+          <br/><a href="../index.html">Yukarı</a>
         </section>          
       </div>
     </body>
-</html>
+  </html>
