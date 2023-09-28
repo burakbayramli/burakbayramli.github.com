@@ -96,7 +96,7 @@ function show_picks() {
     out = "";
     out += "<h5>Picks</h5>"
     Object.keys(cook['movies']).forEach(function(key) {
-	out += "<a href=''>" + key + `</a><a onclick='remove("${key}")' class='remove' href='#'>Remove</a><br/>`
+	out += "<a href=''>" + key + `</a><p class='remove'><a onclick='remove("${key}")' href='#'>Remove</a></p>`
     })      
     document.getElementById("picks").innerHTML = out;
 
