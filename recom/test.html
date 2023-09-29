@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <script>
+  function foo() {
+     console.log("===" + document.cookie);
+     document.cookie = "bb={'a': 3}; expires=Wed, 05 Aug 2025 23:00:00 UTC"
+   }
+</script>
+    
+<body onload="foo()">
+  
+    <div id="output">
+    </div>
+    
+  </body>
+  
+</html>
+
+
