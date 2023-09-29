@@ -89,7 +89,7 @@ function closest_cluster(picks, means, title_id) {
 function show_picks() {
     if (document.cookie.length < 1) {
 	empty = {"movies": {}}
-	document.cookie = JSON.stringify(empty);
+	document.cookie = JSON.stringify(empty) + ";expires=Tue, 19 Jan 2038 00:00:00 GMT;path='/'";
     }
     
     cook = JSON.parse(document.cookie);
