@@ -89,10 +89,11 @@ function closest_cluster(picks, means, title_id) {
 function show_picks() {
     if (document.cookie.length < 1) {
 	empty = {"movies": {}}
-	document.cookie = JSON.stringify(empty) + ";expires=Tue, 19 Jan 2038 00:00:00 GMT;path='/'";
+	document.cookie = 'bb=' + JSON.stringify(empty) + '; expires=Wed, 05 Aug 2025 23:00:00 UTC';
     }
     
-    cook = JSON.parse(document.cookie);
+    var elems = document.cookie.split("=");
+    cook = JSON.parse(elems[1]);    
     out = "";
     out += "<h5>Picks</h5>"
     Object.keys(cook['movies']).forEach(function(key) {
@@ -110,18 +111,20 @@ function show_picks() {
 }
 
 function remove(movie) {
-    cook = JSON.parse(document.cookie);
+    var elems = document.cookie.split("=");
+    cook = JSON.parse(elems[1]);    
     delete cook['movies'][movie];
-    document.cookie = JSON.stringify(cook);
+    document.cookie = 'bb=' + JSON.stringify(cook) + '; expires=Wed, 05 Aug 2025 23:00:00 UTC';
     show_picks();
 }
 
 function add_movie() {
     mov = document.getElementById("myInput").value;
     rat = document.getElementById("myRating").value;
-    cook = JSON.parse(document.cookie);
+    var elems = document.cookie.split("=");
+    cook = JSON.parse(elems[1]);    
     cook['movies'][mov] = rat;
-    document.cookie = JSON.stringify(cook);
+    document.cookie = 'bb=' + JSON.stringify(cook) + '; expires=Wed, 05 Aug 2025 23:00:00 UTC';
 }
 
 
@@ -144,7 +147,9 @@ function sample_wr(sample_from, seed, N) {
 }
 
 function paged_results(page, N) {
-    picks = JSON.parse(document.cookie)['movies'];
+    var elems = document.cookie.split("=");
+    cook = JSON.parse(elems[1]);    
+    picks = cook['movies'];
     means = JSON.parse(fetch_means_data());
     title_id = JSON.parse(fetch_title_id_data());
     rev = JSON.parse(fetch_id_title_rev_data());
@@ -155,7 +160,9 @@ function paged_results(page, N) {
 }
 
 function recommend(page) {
-    picks = JSON.parse(document.cookie)['movies'];
+    var elems = document.cookie.split("=");
+    cook = JSON.parse(elems[1]);    
+    picks = cook['movies'];
     recom_tmp = paged_results(page, 10);
     var recom = [];
     recom_tmp.forEach(function(key) {
