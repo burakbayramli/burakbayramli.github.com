@@ -30,10 +30,11 @@
 
     <script>
       function myFunction() {
-         cook = JSON.parse(document.cookie);
+         var elems = document.cookie.split("=");
+         cook = JSON.parse(elems[1]);    
          new_picks = JSON.parse(document.getElementById("myTextarea").value);
          cook['movies'] = new_picks;
-         document.cookie = JSON.stringify(cook);
+         document.cookie = 'bb=' + JSON.stringify(cook) + '; expires=Wed, 05 Aug 2025 23:00:00 UTC';
          alert('done');
       }
      </script>    
