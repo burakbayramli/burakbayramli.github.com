@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/main.css" media="screen" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>  
+
+  <script src="../common.js"></script>    
+  <script src="weather.js"></script>    
+  
+  <body onload='init2()'>
+
+    <p>
+      <button onclick="getLocation()">Get Location</button>
+      &nbsp;
+      <button onclick="getWeatherData()">Get Forecast</button>
+    </p>
+    
+    <div id="position"></div>
+
+    <div id='output'></div><br/>
+    
+    <input id="owm_key" type="text" name="owmkey"/>
+    
+    <button onclick="set_owm_key()">Set</button>
+    
+    
+  </body>
+  
+</html>
+
