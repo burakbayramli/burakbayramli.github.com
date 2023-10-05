@@ -1,28 +1,47 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="/static/main.css" media="screen" />
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  </head>  
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full">
+    </script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://burakbayramli.github.io/css/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+                  crossorigin="anonymous"></script>
+  </head>
 
   <script src="../common.js"></script>    
   <script src="weather.js"></script>    
   
   <body onload='init2()'>
 
-    <p>
-      <button onclick="getLocation()">Get Location</button>
-      &nbsp;
-      <button onclick="getWeatherData()">Get Forecast</button>
-    </p>
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <h2 id="project_tagline"></h2>          
+      </header>
+    </div>
     
-    <div id="position"></div>
+    <div id="main_content_wrap" class="outer">        
+      <section id="main_content" class="inner">
 
-    <div id='output'></div><br/>
+        <h2>Weather</h2>
     
-    <input id="owm_key" type="text" name="owmkey"/>
-    
-    <button onclick="set_owm_key()">Set</button>
-    
+        <p>
+          <button onclick="getLocation()">Get Location</button>
+          &nbsp;
+          <button onclick="getWeatherData()">Get Forecast</button>
+        </p>
+        
+        <div id="position"></div>
+
+        <div id='output'></div><br/>
+        
+        <input id="owm_key" type="text" name="owmkey"/>
+        
+        <button onclick="set_owm_key()">Set</button>
+        
+      </section>
+    </div>
     
   </body>
   

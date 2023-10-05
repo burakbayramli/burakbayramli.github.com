@@ -70,3 +70,6 @@
 .codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
 .container a {display:none}
 .container:hover a {padding-left: 0.3em; display:inline; font-size: 0.8em}
+.hourrow span {
+    padding: 10px;
+}
