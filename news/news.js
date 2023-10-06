@@ -86,6 +86,7 @@ function visit() {
 	    } catch (Exception) {
 		console.log("Error");
 	    }
+	});
 
     })
     document.getElementById("news").innerHTML = out;
