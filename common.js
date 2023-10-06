@@ -1,5 +1,5 @@
 
-all_apps = ['weather','movies'];
+all_apps = ['weather','movies','news'];
 
 expires_path = '; expires=Wed, 05 Aug 2025 23:00:00 UTC;path=/';
 
