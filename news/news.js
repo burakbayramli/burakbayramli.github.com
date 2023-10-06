@@ -37,7 +37,6 @@ function saveShowHideTextBox(){
 var news_sources = [["First Post","https://www.firstpost.com/rss/world.xml"],
 		    ["Politico","https://www.politico.com/rss/politicopicks.xml"],
 		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"],
-		    ["TASS","http://tass.com/rss/v2.xml"],
 		    ["CNBC","https://www.cnbc.com/id/100727362/device/rss/rss.html"],
 		    ["NYT", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"]
 		   ];
