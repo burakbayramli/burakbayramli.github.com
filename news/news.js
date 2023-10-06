@@ -37,6 +37,8 @@ function saveShowHideTextBox(){
 var news_sources = [["First Post","https://www.firstpost.com/rss/world.xml"],
 		    ["Politico","https://www.politico.com/rss/politicopicks.xml"],
 		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"],
+		    ["Fox News","http://feeds.foxnews.com/foxnews/science"],
+		    ['UN News','https://news.un.org/feed/subscribe/en/news/all/rss.xml'],
 		    ["CNBC","https://www.cnbc.com/id/100727362/device/rss/rss.html"],
 		    ["NYT", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"]
 		   ];
@@ -64,23 +66,26 @@ function visit() {
 	const blogDescription = result.split('<description>')[1].split('</description>')[0];
 	let data = [];
 	result.split('<item>').forEach(element => {
-            var postTitle = element.split('<title>')[1].split('</title>')[0];
-            var postLink = element.split('<link>')[1].split('</link>')[0];
-            var postDescr = element.split('<description>')[1].split('</description>')[0];
-	    postTitle = postTitle.replace("<![CDATA[","");
-	    postTitle = postTitle.replace("]]>","");
-	    postDescr = postDescr.replace("<![CDATA[","");
-	    postDescr = postDescr.replace("]]>","");
-	    let skip = false;
-	    skip_words.forEach(function(word) {
-		if (postDescr.includes(word) || postTitle.includes(word)) {
-		    skip = true;
+	    try {
+		var postTitle = element.split('<title>')[1].split('</title>')[0];
+		var postLink = element.split('<link>')[1].split('</link>')[0];
+		var postDescr = element.split('<description>')[1].split('</description>')[0];
+		postTitle = postTitle.replace("<![CDATA[","");
+		postTitle = postTitle.replace("]]>","");
+		postDescr = postDescr.replace("<![CDATA[","");
+		postDescr = postDescr.replace("]]>","");
+		let skip = false;
+		skip_words.forEach(function(word) {
+		    if (postDescr.includes(word) || postTitle.includes(word)) {
+			skip = true;
+		    }
+		})
+		if (! skip) {
+		    out += `<p><a href="${postLink}">${postTitle}</a><br/><br/>${postDescr}</p>`;
 		}
-	    })
-	    if (! skip) {
-		out += `<p><a href="${postLink}">${postTitle}</a><br/><br/>${postDescr}</p>`;
+	    } catch (Exception) {
+		console.log("Error");
 	    }
-	});
 
     })
     document.getElementById("news").innerHTML = out;
