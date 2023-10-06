@@ -34,7 +34,8 @@ function saveShowHideTextBox(){
 //		    ["WION","https://www.wionews.com/feeds/world/rss.xml"],
 //		    ["Hindustan Times World","https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml"],
 
-var news_sources = [["First Post","https://www.firstpost.com/rss/world.xml"],
+var news_sources = [['FuelCellsWorks','https://fuelcellsworks.com/feed/'],
+		    ["First Post","https://www.firstpost.com/rss/world.xml"],
 		    ["Politico","https://www.politico.com/rss/politicopicks.xml"],
 		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"],
 		    ["Fox News","https://moxie.foxnews.com/google-publisher/latest.xml"],
