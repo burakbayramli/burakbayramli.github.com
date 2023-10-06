@@ -74,6 +74,8 @@ function visit() {
 		postTitle = postTitle.replace("]]>","");
 		postDescr = postDescr.replace("<![CDATA[","");
 		postDescr = postDescr.replace("]]>","");
+		postLink = postLink.replace("<![CDATA[","");
+		postLink = postLink.replace("]]>","");
 		let skip = false;
 		skip_words.forEach(function(word) {
 		    if (postDescr.includes(word) || postTitle.includes(word)) {
@@ -81,8 +83,8 @@ function visit() {
 		    }
 		})
 		if (! skip) {
-		    out += `<p><a href="${postLink}">${postTitle}</a><br/><br/>${postDescr}</p>`;
-		}
+		    out += `<p><a href="${postLink}" target="_blank">${postTitle}</a><br/><br/>${postDescr}</p>`;
+		}		
 	    } catch (Exception) {
 		console.log("Error");
 	    }
