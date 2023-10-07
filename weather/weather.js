@@ -610,12 +610,14 @@ function fetchForecast() {
 		pressure = psychrolib.GetStandardAtmPressure(0);
 
 		var res = "";
-		res += "<p class='hourrow'><span>Day</span><span>Temperature</span><span>Humidity</span><span>Wet Bulb</span><span>Date</span></p>";
+		res += "<table>";
+		res += "<tr><td>Day</td><td>Type</td><td>Temperature</td><td>Humidity</td><td>Wet Bulb</td><td>Date</td></tr>";
 		data.hourly.forEach((value, index) => {
 		    if (index % 3 == 0) {
 			var dayname = new Date(value.dt * 1000).toLocaleDateString("en", {
 			    weekday: "long",
 			});
+			var descr = value.weather[0]['description']
 			var temp = value.temp;
 			var hum = value.humidity;
 			var date = new Date(value.dt * 1000);
@@ -625,10 +627,12 @@ function fetchForecast() {
 			var wbt = psychrolib.GetTWetBulbFromRelHum(temp, hum/100.0, pressure);
 			wbt = Number(wbt.toFixed(2));
 			var dt = mon + "/" + day + " " + hours + ":00";			
-			res += `<p class='hourrow'><span>${dayname}</span><span>${temp}</span><span>${hum}</span><span>${wbt}</span><span>${dt}</span></p>`;
+			res += `<tr><td>${dayname}</><td>${descr}</td><td>${temp}</td><td>${hum}</td><td>${wbt}</td><td>${dt}</td></tr>`;
 		    }
 		});
+		res += "</table>";
 		document.getElementById('output').innerHTML = res;
+		
 	    });
 	})
 	.catch(function (err) {
