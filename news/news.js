@@ -80,6 +80,7 @@ function visit() {
 	});
 
     })
+    document.getElementById("processing").style.display = "none";
     document.getElementById("news").innerHTML = out;
 }
 
@@ -90,5 +91,6 @@ function init() {
     if ( ! prefs['news'].hasOwnProperty("filter_words") ) {
 	prefs['news']['filter_words'] = "example1,example2";
     }
+    document.getElementById("processing").style.display = "block";
     visit();
 }
