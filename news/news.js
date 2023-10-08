@@ -18,21 +18,6 @@ function saveShowHideTextBox(){
 
 }
 
-//		    ["H2 Central","https://hydrogen-central.com/feed"],
-//		    ["Politico.eu","https://www.politico.eu/feed/"],
-//		    ["France 24","https://www.france24.com/en/rss"],
-//		    ["TDB","https://feeds.thedailybeast.com/summary/rss/articles"],
-//		    ["The Atlantic", "https://www.theatlantic.com/feed/all"],
-//		    ["Informed Comment","https://www.juancole.com/feed"],
-//		    ["Independent, The", "http://www.independent.co.uk/news/world/rss"],
-//		    ["The Guardian","http://www.theguardian.com/world/rss"],
-//		    ["Al Monitor","https://www.al-monitor.com/rss"],
-//		    ["TASS","http://tass.com/rss/v2.xml"],
-//		    ["Jane's Defence", "https://www.janes.com/feeds/news"],
-//		    ["Japan Times","https://www.japantimes.co.jp/feed/"],
-//		    ["WSJ","https://feeds.a.dj.com/rss/RSSOpinion.xml"],
-//		    ["WION","https://www.wionews.com/feeds/world/rss.xml"],
-//		    ["Hindustan Times World","https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml"],
 
 var news_sources = [['FuelCellsWorks','https://fuelcellsworks.com/feed/'],
 		    ["First Post","https://www.firstpost.com/rss/world.xml"],
@@ -77,6 +62,9 @@ function visit() {
 		postDescr = postDescr.replace("]]>","");
 		postLink = postLink.replace("<![CDATA[","");
 		postLink = postLink.replace("]]>","");
+		const regex = /<img .*?>/i;
+		postDescr = postDescr.replace(regex, '');
+		
 		let skip = false;
 		skip_words.forEach(function(word) {
 		    if (postDescr.includes(word) || postTitle.includes(word)) {
