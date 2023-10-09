@@ -611,7 +611,7 @@ function fetchForecast() {
 
 		var res = "";
 		res += "<table>";
-		res += "<tr><td>Day</td><td>Type</td><td>Temperature</td><td>Humidity</td><td>Wet Bulb</td><td>Date</td></tr>";
+		res += "<tr><td>Day</td><td>Type</td><td>C</td><td>Hum</td><td>WB</td><td>Date</td></tr>";
 		data.hourly.forEach((value, index) => {
 		    if (index % 3 == 0) {
 			var dayname = new Date(value.dt * 1000).toLocaleDateString("en", {
