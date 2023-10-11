@@ -1,7 +1,7 @@
 
 function fetch_data() {
 
-    url = "/static/prof/data-19000101.json";
+    url = "/prof/data-19000101.json";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
