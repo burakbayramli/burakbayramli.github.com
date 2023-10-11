@@ -62,9 +62,8 @@ function calculate() {
     var mon = document.getElementById("mon").value;
     var year = document.getElementById("year").value;
         
-    //const birth_date = new Date("1973-04-24");
     const birth_date = new Date(year + "-" + mon + "-" + day);
-    console.log(birth_date);
+
     res = get_data(birth_date);
 
     spiller = res[0];
@@ -74,36 +73,34 @@ function calculate() {
     }
     out = "";
     out += `<p>Spiller</p>`;
-    out += `<p><a href="details/spiller/${spiller}.html">${spiller}</a></p>`;
+    out += `<p><a href="details/spiller/${spiller}.html" target="_blank">${spiller}</a></p>`;
 
     out += `<p>Chinese</p>`;
-    out += `<p><a href="details/chinese/${res[1]}.html">${res[1]}</a></p>`;
+    out += `<p><a href="details/chinese/${res[1]}.html" target="_blank">${res[1]}</a></p>`;
 
     mil1 = String(res[2][0]) + String(res[2][1]);
     
     out += `<p>Lewi</p>`;
     for (var i=0;i<res[3].length;i++) {
 	var lewi = res[3][i];
-	out += `<a href="details/lewi/${lewi}.html">${lewi}</a>&nbsp;&nbsp;`;	
+	out += `<a href="details/lewi/${lewi}.html" target="_blank">${lewi}</a>&nbsp;&nbsp;`;	
     }
     out += "</p>";
 
     out += `<p>Millman</p>`;
-    out += `<p><a href="details/millman/${mil1}.html">${mil1}</a>&nbsp;&nbsp;`;
+    out += `<p><a href="details/millman/${mil1}.html" target="_blank">${mil1}</a>&nbsp;&nbsp;`;
 
     for (var i=2;i<res[2].length;i++) {
 	var mil2 = res[2][i];
-	out += `<a href="details/millman/${mil2}.html">${mil2}</a>&nbsp;&nbsp;`;	
+	out += `<a href="details/millman/${mil2}.html" target="_blank">${mil2}</a>&nbsp;&nbsp;`;	
     }
     out += "</p>";
 
     out += "<p>Cycle</p>";
     var c = calculate_cycle(birth_date);
-    out += `<p><a href="details/millman/nineyearcycle.html">${c}</a></p>`;
+    out += `<p><a href="details/millman/nineyearcycle.html" target="_blank">${c}</a></p>`;
     
-    document.getElementById("output").innerHTML = out;
-
-    
+    document.getElementById("output").innerHTML = out;    
 }
 
 function calculate_mbti(input) { 
