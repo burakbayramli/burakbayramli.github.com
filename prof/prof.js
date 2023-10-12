@@ -96,11 +96,11 @@ function calculate() {
     }
     out = "";
     out += `<p>Spiller</p>`;
-    out += `<p><a href="details/spiller/${spiller}.html">${spiller}</a></p>`;
+    out += `<p><a href="details/spiller/${spiller}.html" target="_blank">${spiller}</a></p>`;
     copy_links += `${base_url}/details/spiller/${spiller}.html\n`;
     
     out += `<p>Chinese</p>`;
-    out += `<p><a href="details/chinese/${res[1]}.html">${res[1]}</a></p>`;
+    out += `<p><a href="details/chinese/${res[1]}.html" target="_blank">${res[1]}</a></p>`;
     copy_links += `${base_url}/details/chinese/${res[1]}.html\n`;
 
     mil1 = String(res[2][0]) + String(res[2][1]);
@@ -108,26 +108,26 @@ function calculate() {
     out += `<p>Lewi</p>`;
     for (var i=0;i<res[3].length;i++) {
 	var lewi = res[3][i];
-	out += `<a href="details/lewi/${lewi}.html">${lewi}</a>&nbsp;&nbsp;`;
+	out += `<a href="details/lewi/${lewi}.html" target="_blank">${lewi}</a>&nbsp;&nbsp;`;
 	copy_links += `${base_url}/details/lewi/${lewi}.html\n`;
     }
     out += "</p>";
 
     out += `<p>Millman</p>`;
-    out += `<p><a href="details/millman/${mil1}.html">${mil1}</a>&nbsp;&nbsp;`;
+    out += `<p><a href="details/millman/${mil1}.html" target="_blank">${mil1}</a>&nbsp;&nbsp;`;
     copy_links += `${base_url}/details/millman/${mil1}.html\n`;
 
     for (var i=2;i<res[2].length;i++) {
 	var mil2 = res[2][i];
-	out += `<a href="details/millman/${mil2}.html">${mil2}</a>&nbsp;&nbsp;`;
+	out += `<a href="details/millman/${mil2}.html" target="_blank">${mil2}</a>&nbsp;&nbsp;`;
 	copy_links += `${base_url}/details/millman/${mil2}.html\n`;
     }
     out += "</p>";
 
     out += "<p>Cycle</p>";
     var c = calculate_cycle(birth_date);
-    out += `<p><a href="details/millman/nineyearcycle.html">${c}</a></p>`;
-        
+    out += `<p><a href="details/millman/nineyearcycle.html" target="_blank">${c}</a></p>`;
+    
     document.getElementById("output").innerHTML = out;
     document.getElementById("urls").innerText = copy_links;
     document.getElementById('copy_btn').style.display = "block";
