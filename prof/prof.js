@@ -130,11 +130,13 @@ function calculate() {
         
     document.getElementById("output").innerHTML = out;
     document.getElementById("urls").innerText = copy_links;
+    document.getElementById('copy_btn').style.display = "block";
     
 }
 
 function init() {
     document.getElementById('urls').style.display = "none";
+    document.getElementById('copy_btn').style.display = "none";
 }
 
 function show_urls() {
