@@ -127,19 +127,13 @@ function calculate() {
     out += "<p>Cycle</p>";
     var c = calculate_cycle(birth_date);
     out += `<p><a href="details/millman/nineyearcycle.html">${c}</a></p>`;
-
-    out += "<br/>";
-    out += "<button id='copy_btn' type='submit' onclick='show_urls()'>Copy</button>";
-    out += "<br/>";
         
     document.getElementById("output").innerHTML = out;
     document.getElementById("urls").innerText = copy_links;
-    document.getElementById('copy_btn').style.display = "block";
     
 }
 
 function init() {
-    document.getElementById('copy_btn').style.display = "none";
     document.getElementById('urls').style.display = "none";
 }
 
