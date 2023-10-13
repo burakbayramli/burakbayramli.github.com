@@ -30,7 +30,6 @@ function init() {
 		out += "High: " + daily[last_key]["2. high"] + "\n";
 		out += "Low: " + daily[last_key]["3. low"] + "\n";
 		out += "Close: " + daily[last_key]["4. close"] + "\n";
-		out += "Close: " + daily[last_key]["4. close"] + "\n";
 		out += "Volume: " + daily[last_key]["5. volume"] + "\n";
 		
 		document.getElementById('close').innerText = out;
