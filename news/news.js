@@ -24,7 +24,6 @@ var news_sources = [['FuelCellsWorks','https://fuelcellsworks.com/feed/'],
 		    ["Politico","https://www.politico.com/rss/politicopicks.xml"],
 		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"],
 		    ["Fox News","https://moxie.foxnews.com/google-publisher/latest.xml"],
-		    ['UN News','https://news.un.org/feed/subscribe/en/news/all/rss.xml'],
 		    ["CNBC","https://www.cnbc.com/id/100727362/device/rss/rss.html"],
 		    ["NYT", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"]
 		   ];
