@@ -1,7 +1,7 @@
 
 function init2() {
     const script = document.createElement('script')
-    script.src = 'http://tass.com/rss/v2.xml?callback=handleResponse';
+    script.src = 'https://tass.com/rss/v2.xml?callback=handleResponse';
     document.body.appendChild(script);
 }
 
