@@ -55,8 +55,11 @@ function visit() {
 	const blogTitle = result.split('<title>')[1].split('</title>')[0];
 	const blogDescription = result.split('<description>')[1].split('</description>')[0];
 	let data = [];
-	result.split('<item>').forEach(element => {
+	var elements = result.split('<item>');
+	//result.split('<item>').forEach(element => {
+	for (var i=1;i<Math.min(elements.length,8);i++) {
 	    try {
+		var element = elements[i];
 		var postTitle = element.split('<title>')[1].split('</title>')[0];
 		var postLink = element.split('<link>')[1].split('</link>')[0];
 		var postDescr = element.split('<description>')[1].split('</description>')[0];
@@ -77,13 +80,14 @@ function visit() {
 		})
 		if (! skip) {
 		    out += `<p><a href="${postLink}" target="_blank">${postTitle}</a><br/><br/>${postDescr}</p>`;
-		}		
+		}
 	    } catch (Exception) {
 		console.log("Error");
 	    }
-	});
+	}
 
-    })
+    });
+
     document.getElementById("processing").style.display = "none";
     document.getElementById("news").innerHTML = out;
 }
