@@ -60,7 +60,7 @@ function show_plans() {
     Object.keys(prefs['travel']).forEach(function(key) {
 	var urldesc = key.replace("http://","");
 	var urldesc = urldesc.replace("https://","");
-	out += `<a onclick='show_plan("${key}")' href='#'>${urldesc}</a><span class='container'><a onclick='remove("${key}")' href='#'>Remove</a></span><br/>`;
+	out += `<a onclick='show_plan("${key}")' href='#'>${urldesc}</a><span class='remove'><a onclick='remove("${key}")' href='#'>Remove</a></span><br/>`;
     })      
     document.getElementById("plans").innerHTML = out;    
 }
