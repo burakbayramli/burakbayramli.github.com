@@ -67,6 +67,7 @@ function visit() {
 		postTitle = postTitle.replace("]]>","");
 		postDescr = postDescr.replace("<![CDATA[","");
 		postDescr = postDescr.replace("]]>","");
+		postDescr = postDescr.replace("Read more at The Daily Beast","");
 		postLink = postLink.replace("<![CDATA[","");
 		postLink = postLink.replace("]]>","");
 		const regex = /<img .*?>/i;
