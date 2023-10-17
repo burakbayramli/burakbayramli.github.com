@@ -68,14 +68,30 @@ function show_plans() {
 function show_plan(mainurl) {
     main = JSON.parse(get_data(mainurl));
 
+    var LeafIcon = L.Icon.extend({
+	options: {
+            shadowUrl: 'marker-shadow.png',
+            iconSize:     [20, 40],
+            shadowSize:   [25, 30],
+            iconAnchor:   [10, 45],
+            shadowAnchor: [2, 30],
+            popupAnchor:  [-1, -30]
+	}
+    });
+       
     map = L.map('map').setView([main['center'][0],main['center'][1]], 10);
+    
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: 'OSM'
     }).addTo(map);
 
-    var m = L.marker([main['center'][0],main['center'][1]]).addTo(map);
+    var greenIcon = new LeafIcon({iconUrl: 'marker-icon-2x-green.png'});
     
+    if (typeof lat !== 'undefined') {
+	L.marker([lat,lon], {icon: greenIcon}).addTo(map);
+    }
+	    
     Object.keys(main['points']).forEach(function(key) {
 	var m = L.marker([main['points'][key][0], main['points'][key][1]]).addTo(map);
 	m.bindPopup(key).openPopup();
