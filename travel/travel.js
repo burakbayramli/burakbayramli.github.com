@@ -1,4 +1,8 @@
 
+function init() {
+    show_plans();
+}
+
 function get_data(url) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
@@ -59,10 +63,6 @@ function show_plans() {
 	out += `<a onclick='show_plan("${key}")' href='#'>${urldesc}</a><span class='container'><a onclick='remove("${key}")' href='#'>Remove</a></span><br/>`;
     })      
     document.getElementById("plans").innerHTML = out;    
-}
-
-function init() {
-    show_plans();
 }
 
 function show_plan(mainurl) {
