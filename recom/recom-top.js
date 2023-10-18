@@ -5,7 +5,7 @@ function show_picks() {
     out = "";
     out += "<h5>Picks</h5>"
     Object.keys(prefs['movies']).forEach(function(key) {
-	out += "<span class='container'>" + key + `<a onclick='remove("${key}")' href='#'>Remove</a></span><br/>`
+	out += "<span class='recomcontainer'>" + key + `<a onclick='remove("${key}")' href='#'>Remove</a></span><br/>`
     })      
     document.getElementById("picks").innerHTML = out;    
 }
