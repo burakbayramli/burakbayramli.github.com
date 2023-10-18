@@ -1,67 +1,63 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full">
-    </script>
-    <link rel="stylesheet" type="text/css" media="screen" href="https://burakbayramli.github.io/css/style.css">
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
-                    crossorigin="anonymous"></script>
-    </head>
-    
-    <script src="prof.js"></script>
-    
-     <body onload='init()'>
+    <link rel="stylesheet" href="../bbmain.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+                  crossorigin="anonymous"></script>
+  </head>
 
-      <div id="header_wrap" class="outer">
-        <header class="inner">
-          <h2 id="project_tagline"></h2>          
-        </header>
+  <script src="../common.js"></script>
+  <script src="prof.js"></script>
+  
+    
+  <body onload='init()'>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Profile</p>
+    </div>
+
+    <div id="bbmain">
+      
+      <p>
+        Here is a little astrology, numerology fun. Explore your profile,
+        your friends and family and see what comes out! We also have an
+        <a href="mbti_en.html">MTBI test</a> for Jung fans out there.
+      </p>
+
+      <td><input size=2 id="day" type="text" name="day" placeholder="04"/></td>
+      /
+      <td><input size=2 id="mon" type="text" name="mon" placeholder="12"/></td>
+      /
+      <td><input size=2 id="year" type="text" name="year" placeholder="1993"/></td>
+
+      <td><button onclick="calculate()">Read</button></td>    
+      
+      <div id="output">
       </div>
       
-      <div id="main_content_wrap" class="outer">
-        
-        <section id="main_content" class="inner">
-
-          <h2>Profile</h2>
-
-          <p>
-            Here is a little astrology, numerology fun. Explore your profile,
-            your friends and family and see what comes out! We also have an
-            <a href="mbti_en.html">MTBI test</a> for Jung fans out there.
-          </p>
-
-          
-          <td><input size=2 id="day" type="text" name="day" placeholder="04"/></td>
-          /
-          <td><input size=2 id="mon" type="text" name="mon" placeholder="12"/></td>
-          /
-          <td><input size=2 id="year" type="text" name="year" placeholder="1993"/></td>
-
-          <td><button onclick="calculate()">Read</button></td>    
-          
-          <div id="output"></div>
-
-          <br/>
-          <button id="copy_btn" type="submit" onclick='show_urls()'>Copy</button>
-          <br/>
-          <div id="urls"></div>
-          <br/>
-          <br/>
-
-          <button type="submit" onclick='spildoc_tr()' class="invisible-button" style="opacity:0">Logout</button>
-          
-          <button type="submit" onclick='spildoc_en()' class="invisible-button" style="opacity:0">Logout</button>
-          
-          <br/><a href="../index.html">Up</a>
-          
-        </section>
-                
-      </div>
+      <br/>
+      <button id="copy_btn" type="submit" onclick='show_urls()'>Copy</button>
+      <br/>
+      <div id="urls"></div>
+      <br/>
+      <br/>
       
-    </body>
+      <button type="submit" onclick='spildoc_tr()' class="invisible-button" style="opacity:0">Logout</button>
+      
+      <button type="submit" onclick='spildoc_en()' class="invisible-button" style="opacity:0">Logout</button>
+
+      <div><br/><a href="../index.html">Up</a></div>
+      
+    </div>
     
+  </body>
+
 </html>
+
+
+
+
 
 

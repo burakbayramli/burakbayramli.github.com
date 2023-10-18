@@ -1,31 +1,14 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="https://burakbayramli.github.io/css/style.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
-                   crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
           crossorigin=""/>
-
-    <style>
-      #map {
-        height: 300px;
-      }
-      .rmblock {
-         font-size: 9px;
-         padding-right: 10px;
-         padding-left: 10px;
-      }
-      #plans {
-         padding-top: 10px;
-         padding-bottom: 30px;
-      }
-      .leaflet-tile-container img {
-          box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
-      }         
-    </style>
-  </head>  
+    <link rel="stylesheet" href="../bbmain.css">
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+                   crossorigin="anonymous"></script>
+  </head>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -34,42 +17,34 @@
   <script src="../common.js"></script>
   <script src="travel.js"></script>
   
+    
   <body onload='init()'>
-
-    <div id="header_wrap" class="outer">
-      <header class="inner">
-        <h2 id="project_tagline"></h2>          
-      </header>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Travel</p>
     </div>
-    
-    <div id="main_content_wrap" class="outer">        
-      <section id="main_content" class="inner">
 
-        <h2>Travel</h2>
-    
-        <p>
-          
-          <div>
-            <button onclick="getLocation()">Get Location</button>
-            
-            <input size=12 id="new_url" type="text" name="new_url" placeholder="https//.../index.json"/>
-
-            <button onclick="add_url()">Add</button>        
-          </div>
-          
-          <div id="position"></div>
-
-          <div id="plans"></div>
-
-          <div id="map"></div>
-   
-        <br/><a href="../index.html">Up</a>
-        
-      </section>
+    <div id="bbmain">
       
+      <button onclick="getLocation()">Get Location</button>
+      
+      <input size=12 id="new_url" type="text" name="new_url" placeholder="https//.../index.json"/>
+
+      <button onclick="add_url()">Add</button>
+              
+      <div id="position"></div>
+
+      <div id="plans"></div>
+
+      <div id="map"></div>      
+      
+      <div><br/><a href="../index.html">Up</a></div>
+
     </div>
+
     
   </body>
-  
+
 </html>
 
