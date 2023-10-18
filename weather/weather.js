@@ -587,7 +587,7 @@ function getLocation() {
 function showPosition(position) {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
-    document.getElementById("position").innerHTML = lat + " " + lon;    
+    document.getElementById("weatherposition").innerHTML = lat + " " + lon;    
 }
 
 function fetchForecast() {
@@ -659,14 +659,14 @@ function init2() {
 	document.getElementById("owm_key").value = prefs['weather']['owm_key'];
     }
     if(typeof lat === 'undefined') {
-	document.getElementById("position").innerHTML = "<font color='red'>Position not set</font>";
+	document.getElementById("weatherposition").innerHTML = "<font color='red'>Position not set</font>";
     }
 }
 
 function getWeatherData() {
 
     if(typeof lat === 'undefined') {
-	document.getElementById("position").innerHTML = "<font color='red'>Position not set</font>";
+	document.getElementById("weatherposition").innerHTML = "<font color='red'>Position not set</font>";
     }
 
     res = fetchForecast();

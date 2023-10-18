@@ -86,15 +86,24 @@ function show_plan(mainurl) {
 	attribution: 'OSM'
     }).addTo(map);
 
+    var orangeIcon = new LeafIcon({iconUrl: 'marker-icon-2x-orange.png'});
+    var yellowIcon = new LeafIcon({iconUrl: 'marker-icon-2x-yellow.png'});
     var greenIcon = new LeafIcon({iconUrl: 'marker-icon-2x-green.png'});
     
     if (typeof lat !== 'undefined') {
-	L.marker([lat,lon], {icon: greenIcon}).addTo(map);
+	L.marker([lat,lon], {icon: orangeIcon}).addTo(map);
     }
 	    
+    Object.keys(main['restaurants']).forEach(function(key) {
+    	L.marker([main['restaurants'][key][0], main['restaurants'][key][1]],{icon: yellowIcon}).bindPopup(key).openPopup().addTo(map)
+    });
+            
+    Object.keys(main['campgrounds']).forEach(function(key) {
+    	L.marker([main['campgrounds'][key][0], main['campgrounds'][key][1]],{icon: greenIcon}).bindPopup(key).openPopup().addTo(map);
+    });
+            
     Object.keys(main['points']).forEach(function(key) {
-	var m = L.marker([main['points'][key][0], main['points'][key][1]]).addTo(map);
-	m.bindPopup(key).openPopup();
+	L.marker([main['points'][key][0], main['points'][key][1]]).bindPopup(key).openPopup().addTo(map);
     });
             
     main['maps'].forEach(function(currurl) {

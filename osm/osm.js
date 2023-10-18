@@ -1,7 +1,7 @@
 
 function init()  {
     if(typeof lat === 'undefined') {
-	document.getElementById("position").innerHTML = "<font color='red'>Position not set</font>";
+	document.getElementById("osmposition").innerHTML = "<font color='red'>Position not set</font>";
     }
     
 }
@@ -15,8 +15,8 @@ function getLocation() {
 function showPosition(position) {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
-    document.getElementById("position").innerHTML = lat + " " + lon;
-    document.getElementById("entry1").style.display = "block";
+    document.getElementById("osmposition").innerHTML = lat + " " + lon;
+    document.getElementById("osmentry").style.display = "block";
     map = L.map('map').setView([lat,lon], 12);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,

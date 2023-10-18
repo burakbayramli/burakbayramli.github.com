@@ -32,9 +32,9 @@ function init() {
 		out += "Close: " + daily[last_key]["4. close"] + "\n";
 		out += "Volume: " + daily[last_key]["5. volume"] + "\n";
 		
-		document.getElementById('close').innerText = out;
+		document.getElementById('marketclose').innerText = out;
 		
-		TESTER = document.getElementById('graph');
+		TESTER = document.getElementById('marketgraph');
 		var layout = {
 		    title: { text:'SP 500' }
 		};
