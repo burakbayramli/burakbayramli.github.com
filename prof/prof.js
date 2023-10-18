@@ -29,6 +29,11 @@ function spildoc_en() {
     window.open(url, '_blank');
 }
 
+function mildoc() {
+    url = `details/millman/${mil1}.txt`;
+    window.open(url, '_blank');
+}
+
 function get_data(birth_date) {
 
     data = fetch_data();
