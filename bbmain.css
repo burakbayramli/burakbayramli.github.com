@@ -1,0 +1,27 @@
+.bbheader {
+    padding: 60px;
+    text-align: center;
+    background: #109DE3;
+    color: white;
+    font-size: 30px;
+}
+.bbheader a {
+    text-decoration: none;
+    color: white;
+}
+#bbmain {
+    padding-top: 30px;
+    padding-left: 100px;
+}
+#map {
+    height: 500px;
+}
+.rmblock {
+    font-size: 9px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+#plans {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
