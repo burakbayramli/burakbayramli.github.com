@@ -11,7 +11,7 @@
 }
 #bbmain {
     padding-top: 30px;
-    padding-left: 100px;
+    padding-left: 10%;
 }
 #map {
     height: 500px;
@@ -25,3 +25,4 @@
     padding-top: 10px;
     padding-bottom: 30px;
 }
+
