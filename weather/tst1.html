@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../bbmain.css"
+          </head>
+          
+    <script src="../common.js"></script>
+    <script src="weather.js"></script>
+    
+    <body onload='init2()'>
+
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Weather</p>
+    </div>
+
+    <div id="bbmain">
+            
+      <p>
+        <button onclick="getLocation()">Get Location</button>
+        &nbsp;
+        <button onclick="getWeatherData()">Get Forecast</button>
+      </p>
+      
+      <div id="weatherposition"></div>
+
+      <div id='output'></div><br/>
+      
+      <input id="owm_key" type="text" name="owmkey"/>
+      
+      <button onclick="set_owm_key()">Set</button>
+      
+      <div><br/><a href="../index.html">Up</a></div>
+      
+    </div>
+      
+    </body>
+    
+  </html>
