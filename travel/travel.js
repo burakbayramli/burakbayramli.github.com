@@ -59,8 +59,10 @@ function show_plans() {
     out += "<h5>Plans</h5>";
     Object.keys(prefs['travel']).forEach(function(key) {
 	var urldesc = key.replace("http://","");
-	var urldesc = urldesc.replace("https://","");
-	out += `<a onclick='show_plan("${key}")' href='#'>${urldesc}</a><a class='rmblock' onclick='remove("${key}")' href='#'>Remove</a><br/>`;
+	urldesc = urldesc.replace("https://","");
+	urldesc1 = urldesc.slice(0,10);
+	urldesc2 = urldesc.slice(urldesc.length-20,urldesc.length);
+	out += `<a onclick='show_plan("${key}")' href='#'>${urldesc1} .. ${urldesc2}</a><a class='rmblock' onclick='remove("${key}")' href='#'>Remove</a><br/>`;
     })      
     document.getElementById("plans").innerHTML = out;    
 }
