@@ -26,30 +26,7 @@ function showPosition(position) {
 }
 
 
-function test1() {
-
-    (async () => {
-	const api = await fetch('https://www.overpass-api.de/api/interpreter?', {
-	    method: 'POST',
-	    headers: {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json'
-	    },
-	    body:`[out:json];node['amenity'~'cafe'](around:500,${lat},${lon});out center;`
-	});
-	const answer = await api.json();
-	elems = answer['elements'];
-	elems.forEach(function(x) {
-	    var m = L.marker([x['lat'],x['lon']]).addTo(map);
-	    m.bindPopup(x['tags']['name']).openPopup();
-	});
-	
-    })()    
-
-}
-    
-
-function test2() {
+function show() {
 
     var type = document.getElementById("amenity_type").value;
     var name = document.getElementById("amenity_name").value;

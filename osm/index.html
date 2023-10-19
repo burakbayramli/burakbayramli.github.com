@@ -32,7 +32,9 @@
       <button onclick="getLocation()">Get Location</button>
     </p>
 
+    
     <div id='osmentry'>
+      <p>
       Type:      
       <select id="amenity_type" name="amenity_type" method="POST">
         <option value= ""></option>"
@@ -45,7 +47,9 @@
       &nbsp;
       Name:
       <input size="5" id="amenity_name" type="text" name="amenity_name"/>
-      &nbsp;
+      </p>
+      <p>
+      Distance:
       <select id="amenity_dist" name="amenity_dist" method="POST">
         <option value= ""></option>"
         <option value= "500">0.5 km</option>"
@@ -54,11 +58,9 @@
         <option value= "10000">10 km</option>"
       </select>
       &nbsp;
-      <button onclick="test2()">Map</button>
-      
+      <button onclick="show()">Map</button>      
     </div>
-    
-    
+        
     <div id="osmposition"></div>
 
     <div id="output"></div>
