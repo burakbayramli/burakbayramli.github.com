@@ -672,7 +672,7 @@ function set_owm_key() {
 function getPollution() {
     prefs = get_prefs();
     var key = prefs['weather']['owm_key'];
-    var endpoint = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${key}`;
+    var endpoint = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${key}`;
     fetch(endpoint)
 	.then(function (response) {
 	    if (200 !== response.status) {
