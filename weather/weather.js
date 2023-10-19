@@ -647,17 +647,6 @@ function init() {
     if ('owm_key' in prefs['weather']) {
 	document.getElementById("owm_key").value = prefs['weather']['owm_key'];
     }
-    res = fetchForecast();
-    document.getElementById('output').innerHTML = res;
-}
-
-function init2() {
-    init_cookies(); 
-    prefs = get_prefs();
-    console.log(prefs);
-    if ('owm_key' in prefs['weather']) {
-	document.getElementById("owm_key").value = prefs['weather']['owm_key'];
-    }
     if(typeof lat === 'undefined') {
 	document.getElementById("weatherposition").innerHTML = "<font color='red'>Position not set</font>";
     }
@@ -678,5 +667,33 @@ function set_owm_key() {
     prefs = get_prefs();
     prefs['weather']['owm_key'] = document.getElementById("owm_key").value;
     save_cookie(prefs);
+}
+
+function getPollution() {
+    prefs = get_prefs();
+    var key = prefs['weather']['owm_key'];
+    var endpoint = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${key}`;
+    fetch(endpoint)
+	.then(function (response) {
+	    if (200 !== response.status) {
+		console.log(
+		    "Looks like there was a problem. Status Code: " + response.status
+		);
+		return;
+	    }
+	    out = "";
+	    response.json().then(function (data) {
+		var res = data['list'][0];
+		console.log(res['main']['aqi']);
+		out += "<br/>AQI: " + res['main']['aqi'] + "<br/><br/>";
+		Object.keys(res['components']).forEach(function(x) {
+		    out += x + ": " + res['components'][x] + "<br/>";
+		});
+		document.getElementById('output').innerHTML = out;
+	    });
+	})
+	.catch(function (err) {
+	    console.log("Fetch Error :-S", err);
+	});
 }
 
