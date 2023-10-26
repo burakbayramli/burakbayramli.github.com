@@ -114,7 +114,7 @@ function show_plan(mainurl) {
 
 	paths.forEach(function(path) {
 	    var line = new L.Polyline(path, {
-		color: 'red', weight: 1, opacity: 0.5, smoothFactor: 1
+		color: 'red', weight: 2, opacity: 0.5, smoothFactor: 1
 	    });
 	    line.addTo(map);
 	});
