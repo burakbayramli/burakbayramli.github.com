@@ -9,8 +9,7 @@
 
   <script src="../common.js"></script>
   <script src="news.js"></script>
-  
-    
+           
   <body onload='init()'>
     
     <div class="bbheader">
@@ -19,9 +18,15 @@
     </div>
 
     <div id="bbmain">
-      
+
+      <p>
+        Retrieves latest news from trusted sources. Users can create
+        their own filters on their news, enter the words under Set
+        Filter as comma seperated list, and Save once done.
+      </p>
 
       <button id="but1" onclick="saveShowHideTextBox()">Set Filter</button>
+      <button id="but2" onclick="get_news();">Get News</button>
       <p>
         <textarea style="display:none;" id="filter_words" cols="30" rows="10" ></textarea>
       </p>
@@ -38,6 +43,7 @@
     </div>
     
   </body>
+
 
 </html>
 

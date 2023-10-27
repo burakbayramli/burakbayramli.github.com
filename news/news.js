@@ -1,7 +1,6 @@
 
 function saveShowHideTextBox(){
     prefs = get_prefs();
-    console.log(prefs['news']['filter_words']);
     var x = document.getElementById("filter_words");
     if (x.style.display === "none") {
 	document.getElementById("filter_words").value = prefs['news']['filter_words'];
@@ -18,7 +17,6 @@ function saveShowHideTextBox(){
 
 }
 
-
 var news_sources = [["First Post","https://www.firstpost.com/rss/world.xml"],
 		    ["Politico","https://www.politico.com/rss/politicopicks.xml"],
 		    ["Politico.eu","https://corsproxy.io/?https://www.politico.eu/feed/"],
@@ -32,13 +30,13 @@ var news_sources = [["First Post","https://www.firstpost.com/rss/world.xml"],
 		    ["WION","https://corsproxy.io/?https://www.wionews.com/feeds/world/rss.xml"],
 		    ['FuelCellsWorks','https://fuelcellsworks.com/feed/']
 		   ];
-
 		    
 
-//var skip_words = ['Trump','South'];
-//var skip_words = [];
+async function show_processing() {
+    document.getElementById('processing').style.display = 'block';    
+}
 
-function visit() {
+function get_news() {
     // based on https://github.com/pokiiio/hatena-blog-parser
     prefs = get_prefs();
     skip_words = prefs['news']['filter_words'].split(",");
@@ -88,18 +86,16 @@ function visit() {
 	}
 
     });
-
     document.getElementById("processing").style.display = "none";
     document.getElementById("news").innerHTML = out;
 }
-
+		    
 function init() {
     init_cookies();     
+    document.getElementById("processing").style.display = "none";
     prefs = get_prefs();
-    console.log(prefs);
     if ( ! prefs['news'].hasOwnProperty("filter_words") ) {
 	prefs['news']['filter_words'] = "example1,example2";
     }
-    document.getElementById("processing").style.display = "block";
-    visit();
 }
+
