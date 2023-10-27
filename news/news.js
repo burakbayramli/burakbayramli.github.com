@@ -31,11 +31,6 @@ var news_sources = [["First Post","https://www.firstpost.com/rss/world.xml"],
 		    ['FuelCellsWorks','https://fuelcellsworks.com/feed/']
 		   ];
 		    
-
-async function show_processing() {
-    document.getElementById('processing').style.display = 'block';    
-}
-
 function get_news() {
     // based on https://github.com/pokiiio/hatena-blog-parser
     prefs = get_prefs();
@@ -54,7 +49,6 @@ function get_news() {
 	const blogDescription = result.split('<description>')[1].split('</description>')[0];
 	let data = [];
 	var elements = result.split('<item>');
-	//result.split('<item>').forEach(element => {
 	for (var i=1;i<Math.min(elements.length,8);i++) {
 	    try {
 		var element = elements[i];
@@ -86,8 +80,18 @@ function get_news() {
 	}
 
     });
-    document.getElementById("processing").style.display = "none";
     document.getElementById("news").innerHTML = out;
+}
+
+function process_news() {
+
+    document.getElementById("processing").style.display = "block";
+    new Promise(resolve => setTimeout(() => {
+        resolve(get_news())
+    })).then((result) => {
+	document.getElementById("processing").style.display = "none";
+    });
+    
 }
 		    
 function init() {
@@ -98,4 +102,5 @@ function init() {
 	prefs['news']['filter_words'] = "example1,example2";
     }
 }
+
 
