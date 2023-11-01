@@ -17,23 +17,26 @@ function saveShowHideTextBox(){
 
 }
 
-var news_sources = [["First Post","https://www.firstpost.com/rss/world.xml"],
-		    ["Politico","https://www.politico.com/rss/politicopicks.xml"],
-		    ["Politico.eu","https://corsproxy.io/?https://www.politico.eu/feed/"],
+var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"],
+		    ["Politico.eu","https://api.allorigins.win/raw?url=https://www.politico.eu/feed/"],
 		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"],
-		    ["TDB","https://corsproxy.io/?https://feeds.thedailybeast.com/summary/rss/articles"],
+		    ["TDB","https://api.allorigins.win/raw?url=https://feeds.thedailybeast.com/summary/rss/articles"],
 		    ["CNBC","https://www.cnbc.com/id/100727362/device/rss/rss.html"],
 		    ["NYT", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"],
-		    ["Al Monitor", "https://corsproxy.io/?https://www.al-monitor.com/rss"],
-		    ["Janes","https://corsproxy.io/?https://www.janes.com/feeds/news"],
-		    ["Hindustan Times World","https://corsproxy.io/?https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml"],
-		    ["WION","https://corsproxy.io/?https://www.wionews.com/feeds/world/rss.xml"],
+		    ["Al Monitor", "https://api.allorigins.win/raw?url=https://www.al-monitor.com/rss"],
+		    ["First Post","https://www.firstpost.com/rss/world.xml"],
+		    ["Janes","https://api.allorigins.win/raw?url=https://www.janes.com/feeds/news"],
+		    ["Hindustan Times World","https://api.allorigins.win/raw?url=https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml"],
+		    ["WION","https://api.allorigins.win/raw?url=https://www.wionews.com/feeds/world/rss.xml"],
 		    ['FuelCellsWorks','https://fuelcellsworks.com/feed/']
 		   ];
 		    
 function get_news() {
     // based on https://github.com/pokiiio/hatena-blog-parser
     prefs = get_prefs();
+    if (prefs['news']['filter_words'] == null) {
+	prefs['news']['filter_words'] = "xxyxyxyyxyx";
+    }
     skip_words = prefs['news']['filter_words'].split(",");
     
     out = "";
