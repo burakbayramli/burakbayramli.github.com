@@ -23,6 +23,18 @@ function showPosition(position) {
 	attribution: 'ddd'
     }).addTo(map);
     markers = [];
+    var LeafIcon = L.Icon.extend({
+           	options: {
+                 shadowUrl: '../travel/marker-shadow.png',
+                 iconSize:     [20, 40],
+                 shadowSize:   [25, 30],
+                 iconAnchor:   [10, 45],
+                 shadowAnchor: [2, 30],
+                 popupAnchor:  [-1, -30]
+            	}
+    });    
+    var orangeIcon = new LeafIcon({iconUrl: '../travel/marker-icon-2x-orange.png'});
+    L.marker([lat,lon], {icon: orangeIcon}).addTo(map);    
 }
 
 
@@ -71,6 +83,10 @@ function show() {
 	    }
 
 	});
+
+	var orangeIcon = new LeafIcon({iconUrl: '../travel/marker-icon-2x-orange.png'});
+	L.marker([lat,lon], {icon: orangeIcon}).addTo(map);
+	
 	
     })()    
 
