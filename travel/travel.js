@@ -1,4 +1,17 @@
 
+var LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl: 'marker-shadow.png',
+        iconSize:     [20, 40],
+        shadowSize:   [25, 30],
+        iconAnchor:   [10, 45],
+        shadowAnchor: [2, 30],
+        popupAnchor:  [-1, -30]
+    }
+});
+
+var currLocMarker = null;
+
 function init() {
     show_plans();
 }
@@ -22,6 +35,16 @@ function showPosition(position) {
     lon = position.coords.longitude;
     out = "<br/>" + lat + " " + lon;
     document.getElementById("position").innerHTML = out;
+
+    var orangeIcon = new LeafIcon({iconUrl: 'marker-icon-2x-orange.png'});
+    if (typeof lat !== 'undefined') {
+	if (currLocMarker != null) {
+	    map.removeLayer(currLocMarker);
+	}
+	currLocMarker = L.marker([lat,lon], {icon: orangeIcon});
+	currLocMarker.addTo(map);
+    }
+    
 }
 
 function get_paths(gpx) {
@@ -69,17 +92,6 @@ function show_plans() {
 
 function show_plan(mainurl) {
     main = JSON.parse(get_data(mainurl));
-
-    var LeafIcon = L.Icon.extend({
-	options: {
-            shadowUrl: 'marker-shadow.png',
-            iconSize:     [20, 40],
-            shadowSize:   [25, 30],
-            iconAnchor:   [10, 45],
-            shadowAnchor: [2, 30],
-            popupAnchor:  [-1, -30]
-	}
-    });
        
     map = L.map('map').setView([main['center'][0],main['center'][1]], 10);
     
@@ -88,14 +100,10 @@ function show_plan(mainurl) {
 	attribution: 'OSM'
     }).addTo(map);
 
-    var orangeIcon = new LeafIcon({iconUrl: 'marker-icon-2x-orange.png'});
     var yellowIcon = new LeafIcon({iconUrl: 'marker-icon-2x-yellow.png'});
     var greenIcon = new LeafIcon({iconUrl: 'marker-icon-2x-green.png'});
     
-    if (typeof lat !== 'undefined') {
-	L.marker([lat,lon], {icon: orangeIcon}).addTo(map);
-    }
-	    
+
     Object.keys(main['restaurants']).forEach(function(key) {
     	L.marker([main['restaurants'][key][0], main['restaurants'][key][1]],{icon: yellowIcon}).bindPopup(key).openPopup().addTo(map)
     });
@@ -109,7 +117,10 @@ function show_plan(mainurl) {
     });
             
     main['maps'].forEach(function(currurl) {
-	url = mainurl.substring(0,mainurl.lastIndexOf("/")+1) + currurl;
+	url = currurl;
+	if (! currurl.includes("http")) {
+	    url = mainurl.substring(0,mainurl.lastIndexOf("/")+1) + currurl;
+	}
 	paths = get_paths(get_data(url));
 
 	paths.forEach(function(path) {
