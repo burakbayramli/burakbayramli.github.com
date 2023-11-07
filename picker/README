@@ -1,0 +1,9 @@
+
+
+map.on('click', function(e){
+  var coord = e.latlng;
+  var latclick = coord.lat;
+  var lngclick = coord.lng;
+  console.log(latclick,lngclick);
+});
+

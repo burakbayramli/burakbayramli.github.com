@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="../bbmain.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+                  crossorigin="anonymous"></script>
+  </head>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+
+  <script src="../common.js"></script>
+  <script src="picker.js"></script>
+      
+  <body onload='show()'>
+
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Picker</p>
+    </div>
+
+    <div id="bbmain">
+
+    
+      <p>
+        Allows picking of geo coordinates anywhere in the world by
+        name, or by simply clicking on it via the map below. 
+      </p>
+     
+      <p>
+      <div id="picked">
+      </div>
+      </p>
+
+      <h4>Pick By Clicks</h4>
+      
+      <div id="map"></div>
+      
+      <h4>Pick By Name</h4>
+      
+      <div>
+        <form autocomplete="off" style="padding: 0">
+          <div class="autocomplete">
+            <table><tr>
+              <td><input id="myInput" type="text" name="myCountry" placeholder="City"/></td>
+            </tr>
+            </table>
+          </div>
+        </form>
+        <br/>
+        <button onclick="set_named_pick()">Set</button>
+
+      </div>
+
+      
+      <script src="picker-bot.js"></script>
+      
+      <div><br/><a href="../index.html">Up</a></div>
+    
+    </div>
+    
+  </body>
+
+</html>
+
+
+
+
