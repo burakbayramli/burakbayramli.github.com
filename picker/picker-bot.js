@@ -1,6 +1,6 @@
 function fetch_cities() {
 
-    url = "/static/picker/data/cities.csv";
+    url = "/picker/data/cities.csv";
     return fetch(url)
         .then((response) => { if(response.ok)  return response.text(); })
         .then((text) => {
