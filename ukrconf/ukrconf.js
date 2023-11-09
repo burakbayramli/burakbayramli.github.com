@@ -8,7 +8,7 @@ function plot(before,after) {
     });
     lines = [];
 		      
-    url = `/static/ukrconf/${before}`;
+    url = `/ukrconf/${before}`;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
@@ -24,7 +24,7 @@ function plot(before,after) {
     linebef.addTo(map);
     lines.push(linebef);
     
-    url = `/static/ukrconf/${after}`;
+    url = `/ukrconf/${after}`;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
