@@ -11,6 +11,14 @@ function showPosition(position) {
     document.getElementById("osmposition").innerHTML = lat + " " + lon;
 }
 
+function getLocationFromPicker() {
+    prefs = get_prefs();
+    coords = prefs['picker']['coord'].split(" ");
+    lat = parseFloat(coords[0]);
+    lon = parseFloat(coords[1]);
+    document.getElementById("osmposition").innerHTML = lat + " " + lon;
+}
+
 function in_tens(x) {
     return parseInt(parseInt(parseFloat(parseInt(x)) / 10)*10);
 }
