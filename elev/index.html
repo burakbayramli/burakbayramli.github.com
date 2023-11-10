@@ -14,7 +14,7 @@
   <script src="../common.js"></script>  
   <script src="elev.js"></script>
       
-  <body>
+  <body onload='init()'>
 
     <div class="bbheader">
       <h1><a href="..">BBApps</a></h1>
@@ -27,7 +27,7 @@
         <button onclick="getLocation()">Get Location</button>
         &nbsp;
         <button onclick="getLocationFromPicker()">Picker</button>
-        &nbsp;
+        <br/><br/>
         Max Elevation:
         <select id="max_elev" name="max_elev" method="POST">
           <option value= "300">300</option>"
