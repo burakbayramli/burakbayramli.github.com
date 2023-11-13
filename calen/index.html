@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../bbmain.css">
+    <link rel="stylesheet" type="text/css" href="lightpick.css"/>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+                  crossorigin="anonymous"></script>
+
+  </head>
+
+  <script src="../common.js"></script>
+  <script src="moment.min.js"></script>
+  <script src="lightpick.js"></script>  
+  <script src="calen.js"></script>  
+    
+  <body onload='init()'>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Calendar</p>
+    </div>
+
+    <div id="bbmain">
+
+      
+      <input type="text" id="datepicker" style="display: none"/>
+
+        <script>
+          var picker = new Lightpick({ inline: true, field: document.getElementById('datepicker') });
+        </script>
+
+        <div id='output'>
+        </div>
+        
+    </div>
+      
+      <div><br/><a href="../index.html">Up</a></div>
+      
+    </div>
+    
+  </body>
+
+</html>
+
