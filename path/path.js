@@ -83,7 +83,7 @@ function shortest() {
     coords = document.getElementById("coordto").value.split(",");
     var [lat2, lon2] = coords;
 
-    url = `http://router.project-osrm.org/route/v1/car/${lon1},${lat1};${lon2},${lat2}?alternatives=false`;
+    url = `https://router.project-osrm.org/route/v1/car/${lon1},${lat1};${lon2},${lat2}?alternatives=false`;
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
