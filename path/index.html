@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="../bbmain.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548953794786292"
+                    crossorigin="anonymous"></script>
+  </head>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+
+  <script src="../common.js"></script>
+  <script src="path.js"></script>
+  <script src="polyline.js"></script>
+      
+  <body onload='init()'>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Path</p>
+    </div>
+
+    <div id="bbmain">
+
+      From
+      <input id="coordfr" type="text" name="coordfr" placeholder="latitude,longitude"/>
+      <button onclick="setCurrentFrom()">Use Current</button>
+      <button onclick="setPickerFrom()">Use Picker</button>
+      <br/>
+      <br/>
+      
+      To &nbsp;&nbsp;&nbsp;&nbsp;
+      <input id="coordto" type="text" name="coordto" placeholder="latitude,longitude"/>
+      <button onclick="setCurrentTo()">Use Current</button>
+      <button onclick="setPickerTo()">Use Picker</button>
+      <br/>
+      <br/>
+      <button onclick="shortest()">Path</button>
+      <button onclick="markLocation()">Mark</button>
+
+      <br/>
+      
+      <div id="map"></div>      
+      
+      <div><br/><a href="../index.html">Up</a></div>
+          
+    </div>
+    
+  </body>
+
+</html>
+
