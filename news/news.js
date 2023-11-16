@@ -30,7 +30,7 @@ var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"
 		    ["Janes","https://api.allorigins.win/raw?url=https://www.janes.com/feeds/news"],
 		    ["Hindustan Times World","https://api.allorigins.win/raw?url=https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml"],
 		    ["WION","https://api.allorigins.win/raw?url=https://www.wionews.com/feeds/world/rss.xml"],
-		    ['FuelCellsWorks','https://fuelcellsworks.com/feed/']
+		    ['H2 Central','https://api.allorigins.win/raw?url=https://hydrogen-central.com/feed/']
 		   ];
 		    
 function get_news() {
