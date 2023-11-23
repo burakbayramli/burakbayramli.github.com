@@ -627,15 +627,15 @@ function fetchForecast() {
 			var descr = value.weather[0]['description']
 			var temp = value.temp;
 			var hum = value.humidity;
-			var date = new Date(value.dt * 1000);
-			var day = date.getDay();
-			var mon = date.getMonth();
-			var hours = date.getHours();
 			var wbt = psychrolib.GetTWetBulbFromRelHum(temp, hum/100.0, pressure);
 			wbt = Number(wbt.toFixed(2));
-			var dt = mon + "/" + day + " " + hours + ":00";			
+			var d = new Date(parseInt(value.dt)*1000);			
+			var p1 = d.toLocaleDateString().slice(0,5);
+			var p2 = d.toLocaleTimeString('en-US',{ hour12: false });
+			var dt = p1 + " " + p2 ;
 			res += `<tr><td>${dayname}</><td>${descr}</td><td>${temp}</td><td>${hum}</td><td>${wbt}</td><td>${dt}</td></tr>`;
 		    }
+		    
 		});
 		res += "</table>";
 		document.getElementById('output').innerHTML = res;
