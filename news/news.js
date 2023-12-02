@@ -51,7 +51,6 @@ function get_news() {
 	xmlHttp.open( "GET", url = url, false ); 
 	xmlHttp.send( null );
 	result = xmlHttp.responseText;
-	if (result.length == 0) { continue; }
 	const blogTitle = result.split('<title>')[1].split('</title>')[0];
 	const blogDescription = result.split('<description>')[1].split('</description>')[0];
 	let data = [];
