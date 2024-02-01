@@ -18,7 +18,7 @@ function saveShowHideTextBox(){
 }
 
 var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"],
-		    ["Politico.eu","https://api.allorigins.win/raw?url=https://www.politico.eu/feed/"],
+//		    ["Politico.eu","https://api.allorigins.win/raw?url=https://www.politico.eu/feed/"],
 		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"],
 		    ["TDB","https://api.allorigins.win/raw?url=https://feeds.thedailybeast.com/summary/rss/articles"],
 		    ["The Guardian","https://api.allorigins.win/raw?url=http://www.theguardian.com/world/rss"],
