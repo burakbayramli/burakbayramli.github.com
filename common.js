@@ -1,7 +1,7 @@
 
 all_apps = ['weather','movies','news','travel','picker'];
 
-expires_path = '; expires=Wed, 05 Aug 2025 23:00:00 UTC;path=/bbapps';
+expires_path = '; expires=Wed, 05 Aug 2025 23:00:00 UTC;path=/news';
 
 function init_cookies() {
 
