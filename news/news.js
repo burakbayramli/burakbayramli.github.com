@@ -28,7 +28,7 @@ var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"
 		    ["TASS", "https://api.allorigins.win/raw?url=http://tass.com/rss/v2.xml"],
 		    ["First Post","https://www.firstpost.com/commonfeeds/v1/mfp/rss/world.xml"],
 		    ["Janes","https://api.allorigins.win/raw?url=https://www.janes.com/feeds/news"],
-		    ["Hindustan Times World","https://api.allorigins.win/raw?url=https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml"],
+//		    ["Hindustan Times World","https://api.allorigins.win/raw?url=https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml"],
 		    ["WION","https://api.allorigins.win/raw?url=https://www.wionews.com/feeds/world/rss.xml"]
 		   ];
 		    
