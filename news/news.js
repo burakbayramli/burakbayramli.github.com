@@ -43,19 +43,19 @@ function get_news() {
     
     out = "";
     news_sources.forEach(function(elem) {
-	out += `<h3>${elem[0]}</h3>`;
-	console.log(elem[0],elem[1]);
-	url = elem[1];
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open( "GET", url = url, false ); 
-	xmlHttp.send( null );
-	result = xmlHttp.responseText;
-	const blogTitle = result.split('<title>')[1].split('</title>')[0];
-	const blogDescription = result.split('<description>')[1].split('</description>')[0];
-	let data = [];
-	var elements = result.split('<item>');
-	for (var i=1;i<Math.min(elements.length,8);i++) {
-	    try {
+	try {
+	    out += `<h3>${elem[0]}</h3>`;
+	    console.log(elem[0],elem[1]);
+	    url = elem[1];
+	    var xmlHttp = new XMLHttpRequest();
+	    xmlHttp.open( "GET", url = url, false ); 
+	    xmlHttp.send( null );
+	    result = xmlHttp.responseText;
+	    const blogTitle = result.split('<title>')[1].split('</title>')[0];
+	    const blogDescription = result.split('<description>')[1].split('</description>')[0];
+	    let data = [];
+	    var elements = result.split('<item>');
+	    for (var i=1;i<Math.min(elements.length,8);i++) {
 		var element = elements[i];
 		var postTitle = element.split('<title>')[1].split('</title>')[0];
 		var postLink = element.split('<link>')[1].split('</link>')[0];
@@ -79,12 +79,12 @@ function get_news() {
 		if (! skip) {
 		    out += `<p><a href="${postLink}" target="_blank">${postTitle}</a><br/><br/>${postDescr}</p>`;
 		}
-	    } catch (Error) {
-		console.log("Error");
 	    }
-	}
-
+	} catch (Error) {
+	    console.log("Error");
+	}	    	    
     });
+			 
     document.getElementById("news").innerHTML = out;
 }
 
