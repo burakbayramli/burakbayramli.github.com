@@ -79,7 +79,7 @@ function get_news() {
 		if (! skip) {
 		    out += `<p><a href="${postLink}" target="_blank">${postTitle}</a><br/><br/>${postDescr}</p>`;
 		}
-	    } catch (Exception) {
+	    } catch (Error) {
 		console.log("Error");
 	    }
 	}
