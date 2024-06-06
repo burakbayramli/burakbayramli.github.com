@@ -1,15 +1,14 @@
 
 function saveShowHideTextBox(){
-    prefs = get_prefs();
+
     var x = document.getElementById("filter_words");
     if (x.style.display === "none") {
-	document.getElementById("filter_words").value = prefs['news']['filter_words'];
+	document.getElementById("filter_words").value = localStorage.getItem('news_filter_words');
         x.style.display = "block";
 	document.getElementById("but1").textContent = "Save";
     } else {
 	fw = document.getElementById("filter_words").value;
-	prefs['news']['filter_words'] = fw;
-	save_cookie(prefs);
+	localStorage.setItem("news_filter_words", fw);
         x.style.display = "none";
 	document.getElementById("but1").textContent = "Set Filter";
     }
@@ -34,12 +33,7 @@ var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"
 		    
 function get_news() {
     // based on https://github.com/pokiiio/hatena-blog-parser
-    prefs = get_prefs();
-    if (prefs['news']['filter_words'] == null) {
-	prefs['news']['filter_words'] = "xxyxyxyyxyx";
-    }
-    
-    skip_words = prefs['news']['filter_words'].split(",");
+    skip_words = localStorage.getItem('news_filter_words').split(",");
     
     out = "";
     news_sources.forEach(function(elem) {
@@ -100,12 +94,7 @@ function process_news() {
 }
 		    
 function init() {
-    init_cookies();     
     document.getElementById("processing").style.display = "none";
-    prefs = get_prefs();
-    if ( ! prefs['news'].hasOwnProperty("filter_words") ) {
-	prefs['news']['filter_words'] = "example1,example2";
-    }
 }
 
 
