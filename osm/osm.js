@@ -1,6 +1,6 @@
 
 function init()  {
-    init_cookies(); 
+
 }
 
 function getLocation() {
