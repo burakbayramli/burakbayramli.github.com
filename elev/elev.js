@@ -16,8 +16,7 @@ function showPosition(position) {
 }
 
 function getLocationFromPicker() {
-    prefs = get_prefs();
-    coords = prefs['picker']['coord'].split(" ");
+    coords = sessionStorage.getItem('picker_coord').split(" ");
     lat = parseFloat(coords[0]);
     lon = parseFloat(coords[1]);
     document.getElementById("osmposition").innerHTML = lat + " " + lon;
