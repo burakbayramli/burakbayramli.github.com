@@ -15,7 +15,7 @@ function show_picks() {
 
 function fetch_means_data() {
 
-    url = "/recomdata/means.json";
+    url = "/recom/means.json";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
@@ -24,7 +24,7 @@ function fetch_means_data() {
 
 function fetch_title_id_data() {
 
-    url = "/recomdata/movie_title_int.json";
+    url = "/recom/movie_title_int.json";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
@@ -33,7 +33,7 @@ function fetch_title_id_data() {
 
 function fetch_id_title_rev_data() {
 
-    url = "/recomdata/movie_id_int_rev.json";
+    url = "/recom/movie_id_int_rev.json";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
@@ -42,7 +42,7 @@ function fetch_id_title_rev_data() {
 
 function fetch_cluster_ids(cluster) {
 
-    url = "/recomdata/cluster_members_" + cluster + ".json";
+    url = "/recom/cluster_members_" + cluster + ".json";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
