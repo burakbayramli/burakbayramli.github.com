@@ -13,6 +13,10 @@ var LeafIcon = L.Icon.extend({
 var currLocMarker = null;
 
 function init() {
+    var plans = JSON.parse(localStorage.getItem("travel_plans"));
+    if (plans == null) {
+	localStorage.setItem("travel_plans",JSON.stringify([]));
+    }
     show_plans();
 }
 
@@ -68,24 +72,16 @@ function get_paths(gpx) {
     return all_res;
 }
 
-function remove(url) {
-    prefs = get_prefs();
-    delete prefs['travel'][url];
-    save_cookie(prefs);
-    show_plans();
-}
-
 function show_plans() {
-    init_cookies();    
-    prefs = get_prefs();
+    plans = JSON.parse(localStorage.getItem("travel_plans"));
     out = "";
     out += "<h5>Plans</h5>";
-    Object.keys(prefs['travel']).forEach(function(key) {
-	var urldesc = key.replace("http://","");
+    plans.forEach(function(plan) {
+	var urldesc = plan.replace("http://","");
 	urldesc = urldesc.replace("https://","");
 	urldesc1 = urldesc.slice(0,10);
 	urldesc2 = urldesc.slice(urldesc.length-20,urldesc.length);
-	out += `<a onclick='show_plan("${key}")' href='#'>${urldesc1} .. ${urldesc2}</a><a class='rmblock' onclick='remove("${key}")' href='#'>Remove</a><br/>`;
+	out += `<a onclick='show_plan("${plan}")' href='#'>${urldesc1} .. ${urldesc2}</a><a class='rmblock' onclick='remove("${plan}")' href='#'>Remove</a><br/>`;
     })      
     document.getElementById("plans").innerHTML = out;    
 }
@@ -134,8 +130,18 @@ function show_plan(mainurl) {
 
 function add_url() {
     var new_url = document.getElementById("new_url").value;    
-    prefs = get_prefs();
-    prefs['travel'][new_url] = "1";
-    save_cookie(prefs);
+    plans = JSON.parse(localStorage.getItem("travel_plans"));
+    plans.push(new_url);
+    localStorage.setItem("travel_plans",JSON.stringify(plans));
+    show_plans();
+}
+
+function remove(url) {
+    plans = JSON.parse(localStorage.getItem("travel_plans"));
+    var index = plans.indexOf(url);
+    if (index !== -1) {
+	plans.splice(index, 1);
+    }
+    localStorage.setItem("travel_plans",JSON.stringify(plans));
     show_plans();
 }
