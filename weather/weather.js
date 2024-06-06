@@ -598,8 +598,7 @@ function getLocationFromPicker() {
 }
 
 function fetchForecast() {
-    prefs = get_prefs();
-    var key = prefs['weather']['owm_key'];
+    var key = localStorage.getItem('owm_key');
     var endpoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=metric&appid=${key}`;
     
     fetch(endpoint)
@@ -648,12 +647,7 @@ function fetchForecast() {
 }
 
 function init() {
-    init_cookies(); 
-    prefs = get_prefs();
-    console.log(prefs);
-    if ('owm_key' in prefs['weather']) {
-	document.getElementById("owm_key").value = prefs['weather']['owm_key'];
-    }
+    document.getElementById("owm_key").value = localStorage.getItem('owm_key');
 }
 
 function getWeatherData() {
@@ -669,9 +663,7 @@ function getWeatherData() {
 }
 
 function set_owm_key() {
-    prefs = get_prefs();
-    prefs['weather']['owm_key'] = document.getElementById("owm_key").value;
-    save_cookie(prefs);
+    localStorage.setItem('owm_key',document.getElementById("owm_key").value);
 }
 
 function getPollution() {
@@ -679,8 +671,7 @@ function getPollution() {
 	document.getElementById("weatherposition").innerHTML = "<font color='red'>Position not set</font>";
 	return;
     }
-    prefs = get_prefs();
-    var key = prefs['weather']['owm_key'];
+    var key = localStorage.getItem('owm_key');
     var endpoint = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${key}`;
     fetch(endpoint)
 	.then(function (response) {
