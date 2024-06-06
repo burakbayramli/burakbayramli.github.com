@@ -1,6 +1,5 @@
 
 function show() {
-    init_cookies();     
 
     var map = L.map('map').setView([40,30], 4);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -14,8 +13,8 @@ function show() {
 	var lngclick = coord.lng;
 	var s = "Picked Click: " + latclick + " " + lngclick;
 	document.getElementById('picked').innerHTML = s;
-	prefs['picker']['coord'] = latclick + " " + lngclick;
-	save_cookie(prefs);
+	sessionStorage.setItem('picker_coord',latclick + " " + lngclick);
+	
     });    
 }
 
@@ -24,6 +23,5 @@ function set_named_pick() {
     console.log(name);
     var s = "Picked Name: " + cities_dict[name];
     document.getElementById('picked').innerHTML = s;
-    prefs['picker']['coord'] = cities_dict[name];
-    save_cookie(prefs);
+    sessionStorage.setItem('picker_coord',cities_dict[name]);
 }

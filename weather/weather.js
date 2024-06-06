@@ -591,7 +591,7 @@ function showPosition(position) {
 }
 
 function getLocationFromPicker() {
-    coords = prefs['picker']['coord'].split(" ");
+    coords = sessionStorage.getItem('picker_coord').split(" ");
     lat = parseFloat(coords[0]);
     lon = parseFloat(coords[1]);
     document.getElementById("weatherposition").innerHTML = lat + " " + lon;    
