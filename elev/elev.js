@@ -69,7 +69,7 @@ async function get_data(x,y) {
     for (var i=0;i<x.length;i++) {
 	var idx = fileIndex(x[i],y[i],fileEntry,resolution);
 	chunkIdx = chunk(idx) + 1
-	var url = "/alldata/elev/" + fileEntry['name'] + chunkIdx;
+	var url = "/alldata/globe/" + fileEntry['name'] + chunkIdx;
 	var loc1 = chunkByte(idx);
 	var loc2 = loc1 + 1;
 	promises.push(
