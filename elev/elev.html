@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../bbmain.css">
+  </head>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>  
+
+  <script src="../plotly.js" charset="utf-8"></script>  
+  <script src="elev.js"></script>
+      
+  <body onload='init()'>
+
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Elevation</p>
+    </div>
+
+    <div id="bbmain">
+      
+      <div>
+        <button onclick="getLocation()">Get Location</button>
+        &nbsp;
+        Max Elevation:
+        <select id="max_elev" name="max_elev" method="POST">
+          <option value= "300">300</option>"
+          <option value= "200">200</option>"
+          <option value= "500">500</option>"
+          <option value= "1000">1000</option>"
+          <option value= "2000">2000</option>"
+
+        </select>
+        &nbsp;
+        Radius:
+        <select id="radius" name="radius" method="POST">
+          <option value= "5 km">5</option>"
+          <option value= "10 km">10</option>"
+          <option value= "50">50</option>"
+          <option value= "100">100</option>"
+          <option value= "200">200</option>"
+
+        </select>        
+        &nbsp;
+        <button onclick="plot_elevation()">Show</button>
+        <div id="osmposition"></div>
+      </div>
+                  
+      <div id='myDiv'></div>
+      
+    </div>
+    
+  </body>
+
+</html>
+
