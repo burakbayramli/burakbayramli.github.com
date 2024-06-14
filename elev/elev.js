@@ -1,4 +1,6 @@
 
+var BASE_ELEV_DATA_URL = "/alldata/globe/";
+
 var dataFiles= [
     { name: 'a10g', latMin:    50, latMax:     90, lngMin:   -180, lngMax:    -90, elMin:      1, elMax:    6098, columns:    10800, rows:   4800 },
     { name: 'b10g', latMin:    50, latMax:     90, lngMin:    -90, lngMax:      0, elMin:      1, elMax:    3940, columns:    10800, rows:   4800 },
@@ -23,6 +25,10 @@ function init() { }
 var resolution= 120;
 
 var indexLimits ;
+
+var ELEV_GRID_N = 30;
+
+var ELEV_LIM = 7000;
 
 function findFile( lng, lat ) {
     for ( var i in dataFiles ) {
@@ -69,7 +75,7 @@ async function get_data(x,y) {
     for (var i=0;i<x.length;i++) {
 	var idx = fileIndex(x[i],y[i],fileEntry,resolution);
 	chunkIdx = chunk(idx) + 1
-	var url = "/alldata/globe/" + fileEntry['name'] + chunkIdx;
+	var url = BASE_ELEV_DATA_URL + fileEntry['name'] + chunkIdx;
 	var loc1 = chunkByte(idx);
 	var loc2 = loc1 + 1;
 	promises.push(
@@ -98,8 +104,7 @@ async function plot_elevation () {
     var fileEntry= findFile(lon, lat);
     var radius = parseInt(document.getElementById("radius").value);
     var S = 300;
-    var LIM = 7000;
-
+    
     var xmin = lon - (radius / S);
     var xmax = lon + (radius / S);
     var ymin = lat - (radius / S);
@@ -123,7 +128,7 @@ async function plot_elevation () {
     var z = await get_data(x,y);
 
     var z2 = z.map(function(x) {
-	if (x<LIM) {
+	if (x<ELEV_LIM) {
 	    return x;
 	} else {
 	    return 0;
