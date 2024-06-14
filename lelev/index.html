@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../bbmain.css">
+    <script async="async" data-cfasync="false" src="//pl22489825.profitablegatecpm.com/d84f574876e65b2d8f0c7bae784c22b3/invoke.js"></script>
+  </head>
+
+  <script src="../plotly.js" charset="utf-8"></script>  
+  <script src="../elev/elev.js"></script>
+  <script src="lelev.js"></script>
+      
+  <body>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Line Elevation</p>
+    </div>
+
+    <div id="bbmain">
+
+      
+      <p>
+        Get elevation changes on a straight line starting from a
+        current or a chosen location towards a (degree) direction and
+        distance. Directions are in trigonometric degrees, North is
+        90 degrees, South is 270.
+      </p>
+      
+      <p>
+        <button onclick="getLocation()">Get Location</button>
+        &nbsp;
+        <button onclick="getLocationFromPicker()">Picker</button>
+        &nbsp;
+      </p>
+
+      <div id="position"></div>
+      
+      <p>
+        Direction:
+        <input size="5" id="deg_id" type="text" name="deg_name"/>
+      </p>
+      <p>
+        Distance:
+        <select id="dist_id" name="dist_name" method="POST">
+          <option value= ""></option>"
+          <option value= "5">5 km</option>"
+          <option value= "10">10 km</option>"
+          <option value= "20">20 km</option>"
+          <option value= "100">100 km</option>"
+        </select>
+      </p>
+
+      <button onclick="calc()">Show</button>
+
+      <div id='elevgraph'></div>
+      
+      <div id="container-d84f574876e65b2d8f0c7bae784c22b3"></div>
+
+      <div><br/><a href="../index.html">Up</a></div>
+      
+    </div>
+    
+  </body>
+
+</html>
+
