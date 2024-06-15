@@ -13,7 +13,7 @@ async function searchText() {
 	var tok = stoks[i];
 	var letter_dict;
 	var firstLetter = tok.substring(0,1);
-	var url = `/idx/invidx-${firstLetter}.json`;
+	var url = `/alldata/skidx/invidx-${firstLetter}.json`;
 	await fetch(url)
 	    .then(response => response.json())
 	    .then(data => letter_dict = data );
