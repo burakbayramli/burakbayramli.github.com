@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../bbmain.css">
+
+  </head>
+  <style>
+    #prev {
+       padding: 30px;
+    }
+  </style>
+  <script src="album.js"></script>
+      
+  <body onload='showall()'>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Album</p>
+    </div>
+
+    <div id="bbmain">
+      
+      <div style="margin-left: 100px">
+        <div id="output"></div>
+        <span id="prev"><a href="#" onclick="previous()">Previous</a></span>
+        <span id="next"><a href="#" onclick="next()">Next</a></span>      
+      </div>
+      
+      <div><br/><a href="../index.html">Up</a></div>
+
+      
+    </div>
+    
+  </body>
+
+</html>
