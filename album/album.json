@@ -201,8 +201,8 @@
 		"Murat İkizoğlu": [],
 		"Fatma İkizoğlu": [],
 		"(Reis) Ibrahim İkizoğlu": [],
-		"Hayri Sabri İkizoğlu",
-		"Cemile İkizoğlu"
+		"Hayri Sabri İkizoğlu": [],
+		"Cemile İkizoğlu": []
 	    }
 	},
 	"IMG-20240523-WA0000.jpg": {
@@ -423,7 +423,7 @@
 			"1915 ya da 16 yılında güvenlik kuvvetlerinden kaçan bazı Ermeni aileleri camide saklamıştır."]
 	},
 	"Mahmut Bayramlı": {
-	    "stories": ["Baba tarafında birkaç nesil imam olan ailesi aksine Mahmut modern okula gitti tarih öğretmeni oldu, Ankara'da uzun yıllar lise tarih hocalığı yaptı.",
+	    "stories": ["Baba tarafında birkaç nesil imam olan ailesi aksine Mahmut modern okula gitti tarih öğretmeni oldu, Ankara'da uzun yıllar Deneme Lisesi'nde tarih hocalığı yaptı.",
 			"Aile soyadını o seçti. İsim neredeyse oldukça dini seçilecekti, Hacımüezzinoğlu düşünüldü, fakat sonunda yer ismi Ordu'nun eski olduğu yer 'Bayramlı' seçildi", 
 			"Gençliğinde etrafta sıtma hastalığı yaygındı bu hastalığa engel olması icin kinin verilirdi. Fakat kinin mideye cok zarar veren bir ilaçtır, bu sebeple Mahmut'un midesi hassastı, eşi ona evde sebze ağırlıklı, az et yapardı. Bu et, köfte seven Erdal ve Ercan'ın protesto'larına sebep olurdu."],
 	    
@@ -435,7 +435,8 @@
 			"Dedesinin, dedesinin, dedesi İspir Erzurum'dan Ordu'ya gelmişler. Babaannesinin annesinin annesi Çerkez imiş.",
 			"Aile hakkında kendi yazdıkları şu dokümanda https://tinyurl.com/n7nu4khb"],
 	    "spouse": ["Mahmut Bayramlı"],
-	    "father": "Tahsin Kurul"
+	    "father": "Tahsin Kurul",
+	    "mother": "Hatice Nimet Kurul"
 	},
 	"Tahsin Kurul": {
 	    "father": "Hüseyin Avni Kurul",
@@ -518,6 +519,24 @@
 	    "mother": "Refiye Akkıran",
 	    "father": "Hasbi Akkıran",
 	    "stories": ["Sevil tıp okudu ve doktor olarak çalıştı. Babası Hasbi'nin bir sağlık problemi sırasında acil müdahele ile hayatını kurtarmıştır."]
+	},
+	"Coşkun İkizoğlu": {
+	    "mother": "Şerefnur İkizoğlu",
+	    "father": "Sabahattin İkizoğlu",
+	    "spouse": "Sevgi İkizoğlu",
+	    "stories": ["Kütahya'da muhasebe eğitiminden sonra ANKA, ardından Koç Grubu'nda çalıştı. Amatör ligde futbolcu, baterist.",
+		       "Ortaokul sırasında dayısı Ünal'ın nalburiye dükkanında yardımcısı olarak çalıştı"]
+	},
+	"Şengün Timur": {
+	    "mother": "Şerefnur İkizoğlu",
+	    "father": "Sabahattin İkizoğlu",
+	    "spouse": "Sevgi İkizoğlu"
+	},
+	"Füsun İkizoğlu": {
+	    "mother": "Şerefnur İkizoğlu",
+	    "father": "Sabahattin İkizoğlu",
+	    "spouse": "Ercan Bayramlı",
+	    "stories": ["Ankara Kız Meslek Lisesi'nde giyim öğretmenliği eğitimi aldı, Mustafakemalpaşa'da Kız Meslek Lisesi'nde öğretmen olarak çalıştı."]
 	}
     }
 }
