@@ -430,7 +430,9 @@
 	},
 	"Saffet Bayramlı": {
 	    "stories": ["Bursa Kız Öğretmen okulundan mezun oldu, önce Giresun ve en son Ankara'da uzun süre ilkokul öğretmenliği yaptı. Ankara Bahçelievler'deki evde yaşadı. Aile olarak pek çok akrabanın okumasına yardımcı oldular.",
-		       "Zor şartlarda okuduğunu anlatır, çok seyahat etti, tanıdık akraba yardımı ile eğitime devam etti."],
+			"Zor şartlarda okuduğunu anlatır, çok seyahat etti, tanıdık akraba yardımı ile eğitime devam etti.",
+			"Dedesinin, dedesinin, dedesi İspir Erzurum'dan Ordu'ya gelmişler. Babaannesinin annesinin annesi Çerkez imiş.",
+			"Aile hakkında kendi yazdıkları şu dokümanda https://tinyurl.com/n7nu4khb"],
 	    "spouse": ["Mahmut Bayramlı"],
 	    "father": "Tahsin Kurul"
 	},
@@ -438,10 +440,10 @@
 	    "father": "Hüseyin Avni Kurul",
 	    "mother": "Şaziye Kurul",
 	    "stories": ["Nahiye Müdürü"]
-	}
+	},
 	"Hüseyin Avni Kurul": {	    
 	    "stories": ["Dava vekili (avukat)"]
-	}
+	},
 	"Salih Türker": {
 	    "spouse": ["Besime Türker","Melahat Türker"]
 	},
