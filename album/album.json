@@ -422,12 +422,26 @@
 			"1915 ya da 16 yılında güvenlik kuvvetlerinden kaçan bazı Ermeni aileleri camide saklamıştır."]
 	},
 	"Mahmut Bayramlı": {
-	    "stories": ["Baba tarafından nesiller boyu din görevlisi olan ailesi aksine Mahmut modern okula gidip tarih öğretmeni oldu",
-			"Aile soyadını o seçti. İsim neredeyse oldukça dini seçilecekti, Hacımüezzinoğlu düşünüldü, fakat sonunda yer ismi Bayramlı seçildi", 
-			"Gencliğinde etrafta sıtma hastalığı yaygındı bu hastalığa engel olmasi icin kinin verilirdi. Fakat kinin mideye cok zarar veren bir ilaçtır, bu sebeple Mahmut'un midesi hassastı, eşi ona evde sebze ağırlıklı, az et yapardı. Bu et, köfte seven Ercan'ın özellikle Erdal'ın protesto'larına sebep olurdu."],
+	    "stories": ["Baba tarafında birkaç nesil imam olan ailesi aksine Mahmut modern okula gitti tarih öğretmeni oldu, Ankara'da uzun yıllar lise tarih hocalığı yaptı.",
+			"Aile soyadını o seçti. İsim neredeyse oldukça dini seçilecekti, Hacımüezzinoğlu düşünüldü, fakat sonunda yer ismi Ordu'nun eski olduğu yer 'Bayramlı' seçildi", 
+			"Gençliğinde etrafta sıtma hastalığı yaygındı bu hastalığa engel olması icin kinin verilirdi. Fakat kinin mideye cok zarar veren bir ilaçtır, bu sebeple Mahmut'un midesi hassastı, eşi ona evde sebze ağırlıklı, az et yapardı. Bu et, köfte seven Erdal ve Ercan'ın protesto'larına sebep olurdu."],
 	    
 	    "spouse": ["Saffet Bayramlı"]
 	},
+	"Saffet Bayramlı": {
+	    "stories": ["Bursa Kız Öğretmen okulundan mezun oldu, önce Giresun ve en son Ankara'da uzun süre ilkokul öğretmenliği yaptı. Ankara Bahçelievler'deki evde yaşadı. Aile olarak pek çok akrabanın okumasına yardımcı oldular.",
+		       "Zor şartlarda okuduğunu anlatır, çok seyahat etti, tanıdık akraba yardımı ile eğitime devam etti."],
+	    "spouse": ["Mahmut Bayramlı"],
+	    "father": "Tahsin Kurul"
+	},
+	"Tahsin Kurul": {
+	    "father": "Hüseyin Avni Kurul",
+	    "mother": "Şaziye Kurul",
+	    "stories": ["Nahiye Müdürü"]
+	}
+	"Hüseyin Avni Kurul": {	    
+	    "stories": ["Dava vekili (avukat)"]
+	}
 	"Salih Türker": {
 	    "spouse": ["Besime Türker","Melahat Türker"]
 	},
