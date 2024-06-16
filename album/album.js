@@ -99,5 +99,3 @@ function xy_click(event) {
     let y = event.clientY;
     console.log(x + " " + y);
 }
-
-
