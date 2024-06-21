@@ -537,6 +537,10 @@
 	    "thumbnail": "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",
 	    "desc": "",
 	    "people": {	
+		"Saffet Bayramlı": [],
+		"Mahmut Bayramlı": [],
+		"Erdal Bayramlı": [],
+		"Ercan Bayramlı": []
 	    }
 	},
 	"20240615_082228.jpg": {
@@ -927,7 +931,8 @@
 	"Mahmut Bayramlı": {
 	    "stories": ["Baba tarafında birkaç nesil imam olan ailesi aksine Mahmut modern okula gitti tarih öğretmeni oldu, Ankara'da uzun yıllar Deneme Lisesi'nde tarih hocalığı yaptı.",
 			"Aile soyadını o seçti. İsim neredeyse oldukça dini seçilecekti, Hacımüezzinoğlu düşünüldü, fakat sonunda yer ismi Ordu'nun eski olduğu yer 'Bayramlı' seçildi", 
-			"Gençliğinde etrafta sıtma hastalığı yaygındı bu hastalığa engel olması icin kinin verilirdi. Fakat kinin mideye cok zarar veren bir ilaçtır, bu sebeple Mahmut'un midesi hassastı, eşi ona evde sebze ağırlıklı, az et yapardı. Bu et, köfte seven Erdal ve Ercan'ın protesto'larına sebep olurdu."],
+			"Gençliğinde etrafta sıtma hastalığı yaygındı bu hastalığa engel olması icin kinin verilirdi. Fakat kinin mideye cok zarar veren bir ilaçtır, bu sebeple Mahmut'un midesi hassastı, eşi ona evde sebze ağırlıklı, az et yapardı. Bu et, köfte seven Erdal ve Ercan'ın protesto'larına sebep olurdu.",
+			"Şengün ve Mehmet Timur'un nikah şahitliğini yaptı."],
 	    
 	    "spouse": ["Saffet Bayramlı"]
 	},
