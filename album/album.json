@@ -1261,9 +1261,19 @@
 	    "father": "(Reis) İbrahim İkizoğlu"
 	},
 	"Sait Bayramlı": {
+	    "father": "Abdullah Bayramlı",
+	    "mother": "Gülsüm Bayramlı",
 	    "spouse": ["Rabia Bayramlı","Havva Bayramlı"],
-	    "stories": ["Bayramlı ilçesinde hocalık yaptı.",
+	    "stories": ["1882-1968",
+			"Bayramlı ilçesinde hocalık yaptı.",
 			"1915 ya da 16 yılında güvenlik kuvvetlerinden kaçan bazı Ermeni aileleri camide saklamıştır."]
+	},
+	"Abdullah Bayramlı": {
+	    "stories": ["1860-1882"],
+	    "father": "Mahmut (Pamuk Efendi) Bayramlı"
+	},
+	"Mahmut (Pamuk Efendi) Bayramlı": {
+	    "stories": ["1790-1890"]
 	},
 	"Mahmut Bayramlı": {
 	    "stories": ["Baba tarafında birkaç nesil imam olan ailesi aksine Mahmut modern okula gitti tarih öğretmeni oldu, Ankara'da uzun yıllar Deneme Lisesi'nde tarih hocalığı yaptı.",
@@ -1279,12 +1289,14 @@
 	    "mother": "Rabia Bayramlı",
 	    "father": "Sait Bayramlı"
 	},
-	"Gülsüm Bayramlı": {	    
+	"Gülsüm Bayramlı II": {	    
 	    "mother": "Rabia Bayramlı",
 	    "father": "Sait Bayramlı"
 	},
 	"Rabia Bayramlı": {	    
-	    "spouse": "Sait Bayramlı"
+	    "spouse": "Sait Bayramlı",
+	    "father": "Müftüoğlu Emin Efendi",
+	    "stories": ["1880-1934"]
 	},	
 	"Havva Bayramlı": {	    
 	    "spouse": "Sait Bayramlı"
@@ -1316,7 +1328,8 @@
 	    "stories": ["Bursa Kız Öğretmen okulundan mezun oldu, önce Giresun ve en son Ankara'da uzun süre ilkokul öğretmenliği yaptı. Ankara Bahçelievler'deki evde yaşadı. Aile olarak pek çok akrabanın okumasına yardımcı oldular.",
 			"Zor şartlarda okuduğunu anlatır, çok seyahat etti, tanıdık akraba yardımı ile eğitime devam etti.",
 			"Dedesinin, dedesinin, dedesi İspir Erzurum'dan Ordu'ya gelmişler. Babaannesinin annesinin annesi Çerkez imiş.",
-			"Aile hakkında kendi yazdıkları şu dokümanda https://tinyurl.com/n7nu4khb"],
+			"Aile hakkında kendi yazdıkları şu dokümanda https://tinyurl.com/n7nu4khb",
+			"Dedesinin dedesinin dedesi İspir'den (Erzurum) Ordu'ya gelmişler."],
 	    "spouse": ["Mahmut Bayramlı"],
 	    "father": "Tahsin Kurul",
 	    "mother": "Hatice Nimet Kurul"
@@ -1387,7 +1400,20 @@
 	},
 	"Ahmet Kurul": {	    
 	    "father": "Tahsin Kurul",
-	    "mother": "Hatice Nimet Kurul"	    
+	    "mother": "Hatice Nimet Kurul",
+	    "spouse": ["Muazzez Kurul"]
+	},
+	"Selma Kurul": {
+	    "mother": "Muazzez Kurul",
+	    "father": "Ahmet Kurul"
+	},
+	"Yeşim Kurul": {
+	    "mother": "Muazzez Kurul",
+	    "father": "Ahmet Kurul"
+	},
+	"İlkim Kurul": {
+	    "mother": "Muazzez Kurul",
+	    "father": "Ahmet Kurul"
 	},
 	"Salih Türker": {
 	    "spouse": ["Besime Türker","Melahat Türker"]
