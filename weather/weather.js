@@ -617,7 +617,7 @@ function fetchForecast() {
 
 		var res = "";
 		res += "<table>";
-		res += "<tr><td>Day</td><td>Type</td><td>Temperature</td><td>Humidity</td><td>Wet Bulb</td><td>Date</td></tr>";
+		res += "<tr><td>Day</td><td>Type</td><td>Temp</td><td>Hum</td><td>WB</td><td>Date</td></tr>";
 		data.list.forEach( function (x) {
 		    var dayname = new Date(x.dt * 1000).toLocaleDateString("en", {
 			weekday: "long",
