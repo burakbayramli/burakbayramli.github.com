@@ -597,6 +597,48 @@ function getLocationFromPicker() {
     document.getElementById("weatherposition").innerHTML = lat + " " + lon;    
 }
 
+function fetchToday() {
+    var key = localStorage.getItem('owm_key');
+    var endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=metric&appid=${key}`;
+    console.log(endpoint);
+    fetch(endpoint)
+	.then(function (response) {
+	    if (200 !== response.status) {
+		console.log(
+		    "Looks like there was a problem. Status Code: " + response.status
+		);
+		return;
+	    }
+	    response.json().then(function (x) {
+		//console.log(data);
+		var psychrolib = new Psychrometrics();
+		psychrolib.SetUnitSystem(psychrolib.SI);
+		pressure = psychrolib.GetStandardAtmPressure(0);
+		var res = "";
+		var dayname = new Date(x.dt * 1000).toLocaleDateString("en", {
+		    weekday: "long",
+		});
+		var descr = x.weather[0]['description']
+		var temp = x.main.temp;
+		var hum = x.main.humidity;
+		var wbt = psychrolib.GetTWetBulbFromRelHum(temp, hum/100.0, pressure);
+		wbt = Number(wbt.toFixed(2));
+		var d = new Date(parseInt(x.dt)*1000);
+		var p1 = d.toLocaleDateString().slice(0,5);
+		var p2 = d.toLocaleTimeString('en-US',{ hour12: false });
+		var dt = p1 + " " + p2 ;
+		res += `<p>Status: ${descr}, ${p2}</p>`;
+		res += `<p>Temperature ${temp} C</p>`;
+		res += `<p>Humidity: ${hum}</p>`;
+		res += `<p>Wet Bulb: ${wbt}</p>`;
+		document.getElementById('tdout').innerHTML = res;
+	    });
+	})
+	.catch(function (err) {
+	    console.log("Fetch Error :-S", err);
+	});
+}
+
 function fetchForecast() {
     var key = localStorage.getItem('owm_key');
     var endpoint = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=metric&appid=${key}`;
@@ -653,9 +695,8 @@ function getWeatherData() {
 	return;
     }
 
-    res = fetchForecast();
-    document.getElementById('output').innerHTML = res;
-    
+    fetchForecast();
+    fetchToday();    
 }
 
 function set_owm_key() {
