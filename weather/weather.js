@@ -676,7 +676,7 @@ function fetchForecast() {
 		    res += `<tr><td>${dayname}</><td>${descr}</td><td>${temp}</td><td>${hum}</td><td>${wbt}</td><td>${dt}</td></tr>`;		    		    
 		});
 		res += "</table>";
-		document.getElementById('output').innerHTML = res;
+		document.getElementById('fcout').innerHTML = res;
 	    });
 	})
 	.catch(function (err) {
@@ -733,4 +733,8 @@ function getPollution() {
 	    console.log("Fetch Error :-S", err);
 	});
 }
+
+
+
+
 
