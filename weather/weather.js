@@ -726,15 +726,10 @@ function getPollution() {
 		Object.keys(res['components']).forEach(function(x) {
 		    out += x + ": " + res['components'][x] + "<br/>";
 		});
-		document.getElementById('output').innerHTML = out;
+		document.getElementById('tdout').innerHTML = out;
 	    });
 	})
 	.catch(function (err) {
 	    console.log("Fetch Error :-S", err);
 	});
 }
-
-
-
-
-
