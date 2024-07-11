@@ -118,6 +118,11 @@ function calculate() {
     }
     out += "</p>";
 
+    out += `<p>Day of Month</p>`;
+    var day_total = parseInt(day[0]) + parseInt(day[1])
+    out += `<a href="details/daymon/path-${day_total}.txt" target="_blank">${day_total}</a>&nbsp;&nbsp;`;
+    copy_links += `${base_url}/details/daymon/path-${day_total}.txt\n`;
+       
     out += `<p>Millman</p>`;
     out += `<p><a href="details/millman/${mil1}.html" target="_blank">${mil1}</a>&nbsp;&nbsp;`;
     copy_links += `${base_url}/details/millman/${mil1}.html\n`;
