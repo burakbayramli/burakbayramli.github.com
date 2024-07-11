@@ -87,7 +87,7 @@ function calculate() {
     var mon = document.getElementById("mon").value;
     var year = document.getElementById("year").value;
 
-    var base_url = "https://burakbayramli.github.io/prof";
+    var base_url = "https://burakbayramli.github.io/reading";
     copy_links = "";
     
     const birth_date = new Date(year + "-" + mon + "-" + day);
