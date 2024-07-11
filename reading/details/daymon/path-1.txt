@@ -1,0 +1,85 @@
+Personality Traits of People Born on 1st, 10th, 19th, 28th of Any Month
+
+People born on the 1st, 10th, 19th, or 28th of any month are ruled by
+Life Path Number 1. People born on these dates are found to be born
+leaders. They make exceptionally ambitious and gifted in
+business. They have a daring and risk-taking attitude. They do not
+give up easily. They are stubborn when it comes to getting when they
+set their sight on something.
+
+If you were born on the 1st, 10th, 19th, or 28th of any month, you may
+be told that you are a good planner, independent, good at
+administrative work, and leading in high-pressure situations. You have
+a dynamic, confident (sometimes over-assertive) personality. You have
+a brilliant way of thinking. You do not easily accept defeat. You take
+failures and turn them into fuel to do better.
+
+In your career, you tend to do good in positions of leadership,
+authority, or autonomy. You find it difficult in working under someone
+else’s authority. You are strong-willed, versatile, extroverted,
+ambitious, independent, and at times aggressive, dominant, and
+egoistic. Though, people listen to you as you are good at leading
+them. You are resourceful, loyal, and growth driven. You tend to shine
+bright like the Sun with your talent and captivating personality.
+
+In your career, you tend to do good in positions of leadership,
+authority, or autonomy. You find it difficult in working under someone
+else’s authority. You are strong-willed, versatile, extroverted,
+ambitious, independent, and at times aggressive, dominant, and
+egoistic. Though, people listen to you as you are good at leading
+them. You are resourceful, loyal, and growth driven. You tend to shine
+bright like the Sun with your talent and captivating personality.
+
+Though you do not like to be tamed or chained in bounds. You do not
+like much interference from people or family or friends in your
+personal matters of life. You have clear goals and like to work on
+them in your own ways. You may fail but you would gladly accept that
+as your own doing than be ridiculed by others. You crave love,
+passion, and close connections. You are fiery and straightforward in
+getting what you want.
+
+You tend to be confrontational, not shy to speak your mind, forceful,
+driven, and bold. You hold high self-esteem and are quick to leave
+situations or relationships if you are not treated well. Though you
+are quite preserving, patient, and do not give up till the very
+end. You make friends easily with your energetic and bubbly
+personality. You are strong-headed and take responsibilities
+seriously. You love to express love loud and clear. You will be good
+with all 5 love languages.
+
+Suitable Careers for People Born on 1st, 10th, 19th, 28th of Any Month
+
+People born on the 1st, 10th, 19th, or 28th of any Month should pursue
+government jobs, or fields of business, arts, cinema, inventions,
+science, sales, management, etc. Check below the list of suitable
+careers for people born on the 1st, 10th, 19th, or 28th of Any Month.
+
+Career Options For People Born on 1st, 10th, 19th, 28th of Any Month
+
+Theatre
+Television
+Films
+Acting
+Advertising
+Business
+Finance
+Politics
+Orator
+Public Speaking
+Organizer
+District Administrator
+Consultancy
+Inventions
+Research
+Photography
+Interior or Fashion Designing
+Music
+Arts
+Leaders
+CEO/Senior Management
+Civil Services
+Army or Police
+Trading
+
+https://www.jagranjosh.com/general-knowledge/personality-test-born-on-1st-10th-19th-28th-know-your-dominant-personality-traits-and-suitable-careers-1675254145-1
+
