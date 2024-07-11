@@ -1,7 +1,7 @@
 
 function fetch_data() {
 
-    url = "/prof/data-19000101.json";
+    url = "/reading/data-19000101.json";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
@@ -10,7 +10,7 @@ function fetch_data() {
 
 function fetch_docs() {
 
-    url = "/prof/spildocs.json";
+    url = "/reading/spildocs.json";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url = url, false ); 
     xmlHttp.send( null );
