@@ -1681,7 +1681,20 @@
 	    "mother": "Muazzez Kurul",
 	    "father": "Ahmet Kurul"
 	},
+	"Mehmet": {
+	    "spouse": "Şerif",
+	    "stories": ["Cüsseli, haybetli biri olarak bilinirdi."]
+	},
+	"Salih Gürler": {
+	    "father": "Mehmet",
+	    "mother": "Şerif"
+	},
+	"Mustafa (Mıstık)": {
+	    "father": "Mehmet",
+	    "stories": ["Esnaf"]
+	},
 	"Salih Türker": {
+	    "father": "Mustafa (Mıstık)",
 	    "spouse": ["Besime Türker","Melahat Türker"]
 	},
 	"Besime Türker": {
@@ -1793,8 +1806,22 @@
 	    "mother": "Nigar Çolpan",
 	    "father": "Enver Çolpan",
 	    "stories": ["Türkan, Tekirdağ Kız Meslek Lisesi'nin müdürlüğünü yaptı, göreve ilk başladığında Füsun Bayramlı ortaokulu bitirmişti, Füsun'un kendi Kız Meslesi'ne geçmesini teklif etti, Füsun liseyi orada bitirdi",
-			"Uzun yıllar teyzesi Didar ve eniştesi Kazım Aksoy'a anne/baba olarak hitap etmiştir, fakat bir süre sonra asıl annesinin Nigar Çolpan olduğunu öğrendi.",
-			"İkizoğlu'ları ile akrabalık ilişkisi Şerefnur İkizoğlu ile 'kardeş çocuklarının çocukları' olduğu olarak biliniyor." ]
+			"Uzun yıllar teyzesi Didar ve eniştesi Kazım Aksoy'a anne/baba olarak hitap etmiştir, fakat bir süre sonra asıl ebeveynlerinin Enver/Nigar Çolpan olduğunu öğrendi.",
+			"Enver/Nigar Türkan küçük yaşta iken ayrılır, Kazım/Didar'ın da çocuğu olmamaktadır, Türkan'ı evlat edinirler ve Kazım'ın vefatına kadar konuyu söylemezler.",
+			"İkizoğlu'ları ile akrabalık ilişkisi Şerefnur İkizoğlu ile 'kardeş çocuklarının çocukları' olarak biliniyor." ]
+	},
+	"Enver Çolpan": {
+	    "spouse": "Nigar Çolpan",
+	    "stories": ["Mustafakemalpaşa'da bir fabrika sahibi olduğu biliniyor, eşi Nigar ile Bursa'da oturuyorlardı, fakat genç yaşta ayrıldılar."]
+	},
+	"Didar Çolpan": {
+	    "father": "Salih Gürler"
+	},
+	"Nigar Aksoy": {
+	    "father": "Salih Gürler"
+	},
+	"Kazım Aksoy": {
+	    "stories": ["Subay"]
 	}
     }
 }
