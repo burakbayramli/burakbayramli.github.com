@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../bbmain.css">
+  </head>
+
+  <script src="rad.js"></script>
+      
+  <body onload='init()'>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>Radio</p>
+    </div>
+
+    <div id="bbmain">
+
+      <select id="station_id" name="station_name" method="POST">
+        <option value= "SomaFM: Groove Salad">SomaFM: Groove Salad</option>"
+        <option value= "SomaFM: Secret Agent">SomaFM: Secret Agent</option>"
+        <option value= "Big Blue Swing">Big Blue Swing</option>"
+        <option value= "Radio Paradise">Radio Paradise</option>"
+        <option value= "Gold Instrumental">Gold Instrumental</option>"
+        <option value= "SomaFM: Covers">SomaFM: Covers</option>"
+        <option value= "KCRW">KCRW</option>"
+      </select>
+      &nbsp;
+      <button onclick="play()">Play</button>      
+      
+      <div id="station">
+        
+      </div>
+      
+    </div>
+
+  </body>
