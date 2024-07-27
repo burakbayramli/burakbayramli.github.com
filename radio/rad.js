@@ -4,9 +4,7 @@ var urls = {
     'SomaFM: Secret Agent':'https://ice2.somafm.com/secretagent-32-aac',
     '1Mix Radio':'http://fr2.1mix.co.uk:8060/32aac',
     'Radio Paradise':'https://stream-tx3.radioparadise.com/mp3-32',
-    'Gold Instrumental':'http://199.233.234.34:25373/stream',
-    'SomaFM: Covers':'https://ice4.somafm.com/covers-32-aac',
-    'OPB':'http://flume.opb.org/radio_lbr.mp3#MP3#National'
+    'SomaFM: Covers':'https://ice4.somafm.com/covers-32-aac'
 };
 
 function init() {
