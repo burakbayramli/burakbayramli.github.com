@@ -19,7 +19,7 @@ function init() {
 	});
     }
     if (s.length > 0) {
-	s += '<font size="1.5px"><a href="/static/reminders/index.html">Detail</a></font>';
+	s += '<font size="1.5px"><a href="/reminders/index.html">Detail</a></font>';
 	document.getElementById('reminder').innerHTML = s;
     }
 }
