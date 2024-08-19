@@ -17,7 +17,6 @@ function saveShowHideTextBox(){
 }
 
 var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"],
-		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"],
 		    ["TDB","https://api.allorigins.win/raw?url=https://feeds.thedailybeast.com/summary/rss/articles"],
 		    ["The Guardian","https://api.allorigins.win/raw?url=http://www.theguardian.com/world/rss"],
 		    ["CNBC","https://www.cnbc.com/id/100727362/device/rss/rss.html"],
@@ -26,7 +25,8 @@ var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"
 		    ["Al Monitor", "https://api.allorigins.win/raw?url=https://www.al-monitor.com/rss"],
 		    ["TASS", "https://api.allorigins.win/raw?url=http://tass.com/rss/v2.xml"],
 		    ["First Post","https://www.firstpost.com/commonfeeds/v1/mfp/rss/world.xml"],
-		    ["WION","https://api.allorigins.win/raw?url=https://www.wionews.com/feeds/world/rss.xml"]
+		    ["WION","https://api.allorigins.win/raw?url=https://www.wionews.com/feeds/world/rss.xml"],
+		    ["Arab News","https://www.arabnews.com/cat/3/rss.xml"]
 		   ];
 		    
 function get_news() {
