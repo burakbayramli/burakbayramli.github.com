@@ -120,7 +120,11 @@ function calculate() {
 
     out += `<p>Day of Month</p>`;
     var day_total = parseInt(day[0]) + parseInt(day[1])
-    if (day_total == 10) day_total = 1;
+    console.log("length", String(day_total).length);
+    if (String(day_total).length == 2) {
+	var s = String(day_total);
+	day_total = parseInt(s[0]) + parseInt(s[1])
+    }    
     out += `<a href="details/daymon/path-${day_total}.html" target="_blank">${day_total}</a>&nbsp;&nbsp;`;
     copy_links += `${base_url}/details/daymon/path-${day_total}.html\n`;
        
