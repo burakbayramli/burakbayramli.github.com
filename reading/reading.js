@@ -122,7 +122,7 @@ function calculate() {
     var day_total = parseInt(day[0]) + parseInt(day[1])
     if (day_total == 10) day_total = 1;
     out += `<a href="details/daymon/path-${day_total}.txt" target="_blank">${day_total}</a>&nbsp;&nbsp;`;
-    copy_links += `${base_url}/details/daymon/path-${day_total}.txt\n`;
+    copy_links += `${base_url}/details/daymon/path-${day_total}.html\n`;
        
     out += `<p>Millman</p>`;
     out += `<p><a href="details/millman/${mil1}.html" target="_blank">${mil1}</a>&nbsp;&nbsp;`;
