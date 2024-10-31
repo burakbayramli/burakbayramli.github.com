@@ -621,6 +621,7 @@ function fetchToday() {
 		var descr = x.weather[0]['description']
 		var temp = x.main.temp;
 		var hum = x.main.humidity;
+		var wind = x.wind.deg + " / " + x.wind.speed;
 		var wbt = psychrolib.GetTWetBulbFromRelHum(temp, hum/100.0, pressure);
 		wbt = Number(wbt.toFixed(2));
 		var d = new Date(parseInt(x.dt)*1000);
@@ -630,6 +631,7 @@ function fetchToday() {
 		res += `<p>Status: ${descr}, ${p2}</p>`;
 		res += `<p>Temperature ${temp} C</p>`;
 		res += `<p>Humidity: ${hum}</p>`;
+		res += `<p>Wind: ${wind}</p>`;
 		res += `<p>Wet Bulb: ${wbt}</p>`;
 		document.getElementById('tdout').innerHTML = res;
 	    });
