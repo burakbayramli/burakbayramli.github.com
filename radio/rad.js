@@ -7,7 +7,6 @@ var urls = {
     'SomaFM: Covers':'https://ice4.somafm.com/covers-32-aac',
     "Lush": "https://ice2.somafm.com/lush-32-aac",
     "Beat Blender": "https://ice4.somafm.com/beatblender-32-aac",
-    "GOA": "http://ice4.somafm.com/suburbsofgoa-32-aac",
     'WVIA': 'https://26223.live.streamtheworld.com:443/WVIAFM_SC'
 }    
 
