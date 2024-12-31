@@ -10,6 +10,17 @@ var LeafIcon = L.Icon.extend({
     }
 });
 
+var LeafIconSmall = L.Icon.extend({
+    options: {
+        shadowUrl: 'marker-shadow.png',
+        iconSize:     [10, 20],
+        shadowSize:   [25, 30],
+        iconAnchor:   [10, 45],
+        shadowAnchor: [2, 30],
+        popupAnchor:  [-1, -30]
+    }
+});
+
 var currLocMarker = null;
 
 function init() {
@@ -98,6 +109,7 @@ function show_plan(mainurl) {
 
     var yellowIcon = new LeafIcon({iconUrl: 'marker-icon-2x-yellow.png'});
     var greenIcon = new LeafIcon({iconUrl: 'marker-icon-2x-green.png'});
+    var redIcon = new LeafIconSmall({iconUrl: 'marker-icon-2x-red.png'});
     
 
     Object.keys(main['restaurants']).forEach(function(key) {
@@ -106,6 +118,10 @@ function show_plan(mainurl) {
             
     Object.keys(main['campgrounds']).forEach(function(key) {
     	L.marker([main['campgrounds'][key][0], main['campgrounds'][key][1]],{icon: greenIcon}).bindPopup(key).openPopup().addTo(map);
+    });
+            
+    Object.keys(main['cafes']).forEach(function(key) {
+    	L.marker([main['cafes'][key][0], main['cafes'][key][1]],{icon: redIcon}).bindPopup(key).openPopup().addTo(map);
     });
             
     Object.keys(main['points']).forEach(function(key) {
