@@ -107,6 +107,8 @@ function show_plan(mainurl) {
 	attribution: 'OSM'
     }).addTo(map);
 
+    L.control.scale().addTo(map);    
+
     var yellowIcon = new LeafIcon({iconUrl: 'marker-icon-2x-yellow.png'});
     var greenIcon = new LeafIcon({iconUrl: 'marker-icon-2x-green.png'});
     var redIcon = new LeafIconSmall({iconUrl: 'marker-icon-2x-red.png'});
