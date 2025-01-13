@@ -17,7 +17,7 @@ function saveShowHideTextBox(){
 }
 
 var news_sources = [["Politico","https://www.politico.com/rss/politicopicks.xml"],
-		    ["TDB","https://api.allorigins.win/raw?url=https://feeds.thedailybeast.com/summary/rss/articles"],
+		    ["TDB","https://api.allorigins.win/raw?url=https://www.thedailybeast.com/arc/outboundfeeds/rss/articles/"],
 		    ["The Guardian","https://api.allorigins.win/raw?url=http://www.theguardian.com/world/rss"],
 		    ["CNBC","https://www.cnbc.com/id/100727362/device/rss/rss.html"],
 		    ["NYT", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"],
