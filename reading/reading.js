@@ -65,7 +65,7 @@ function calculate_cycle(birth_date) {
 
     res = get_data(dt);
 
-    res = String(res[2][0]);
+    res = String(res[3][0]);
         
     total = 0;
     if (res.length == 2) {
