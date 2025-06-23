@@ -88,7 +88,6 @@ function calculate() {
     var year = document.getElementById("year").value;
 
     var base_url = "https://burakbayramli.github.io/reading";
-    copy_links = "";
     
     const birth_date = new Date(year + "-" + mon + "-" + day);
     console.log(birth_date);
@@ -96,24 +95,20 @@ function calculate() {
 
     spiller = res[0]; 
     vedic_nn = res[2];
-    
-    if (year == "1973") {
-	spiller = "Gemini"
-    }
-    
+        
     out = "";
     out += `<p>Spiller</p>`;
     out += `<p><a href="details/spiller/${spiller}.html" target="_blank">${spiller}</a></p>`;
-    copy_links += `${base_url}/details/spiller/${spiller}.html\n`;
     
     out += "";
     out += `<p>Vedic North Node</p>`;
-    out += `<p><a href="details/vedic/northadvast/${vedic_nn}.html" target="_blank">${vedic_nn}</a></p>`;
-    copy_links += `${base_url}/details/vedic/northadvast/${vedic_nn}.html\n`;
+    out += `<p>${vedic_nn}&nbsp;&nbsp;`;
+    out += `<a href="details/vedic/northadvast/${vedic_nn}.html" target="_blank">1</a>&nbsp;&nbsp;`;
+    out += `<a href="details/vedic/astrosty/${vedic_nn}.html" target="_blank">2</a>`;
+    out += "</p>";
     
     out += `<p>Chinese</p>`;
     out += `<p><a href="details/chinese/${res[1]}.html" target="_blank">${res[1]}</a></p>`;
-    copy_links += `${base_url}/details/chinese/${res[1]}.html\n`;
 
     mil1 = String(res[3][0]) + String(res[3][1]);
     
@@ -121,28 +116,23 @@ function calculate() {
     for (var i=0;i<res[4].length;i++) {
 	var lewi = res[4][i];
 	out += `<a href="details/lewi/${lewi}.html" target="_blank">${lewi}</a>&nbsp;&nbsp;`;
-	copy_links += `${base_url}/details/lewi/${lewi}.html\n`;
     }
     out += "</p>";
 
     out += `<p>Day of Month</p>`;
     var day_total = parseInt(day[0]) + parseInt(day[1])
-    console.log("length", String(day_total).length);
     if (String(day_total).length == 2) {
 	var s = String(day_total);
 	day_total = parseInt(s[0]) + parseInt(s[1])
     }
     out += `<a href="details/daymon/path-${day_total}.html" target="_blank">${day_total}</a>&nbsp;&nbsp;`;
-    copy_links += `${base_url}/details/daymon/path-${day_total}.html\n`;
     
     out += `<p>Millman</p>`;
     out += `<p><a href="details/millman/${mil1}.html" target="_blank">${mil1}</a>&nbsp;&nbsp;`;
-    copy_links += `${base_url}/details/millman/${mil1}.html\n`;
 
     for (var i=2;i<res[3].length;i++) {
 	var mil2 = res[3][i];
 	out += `<a href="details/millman/${mil2}.html" target="_blank">${mil2}</a>&nbsp;&nbsp;`;
-	copy_links += `${base_url}/details/millman/${mil2}.html\n`;
     }
     out += "</p>";
 
@@ -150,15 +140,11 @@ function calculate() {
     var c = calculate_cycle(birth_date);
     out += `<p><a href="details/millman/nineyearcycle.html" target="_blank">${c}</a></p>`;
     
-    document.getElementById("output").innerHTML = out;
-    document.getElementById("urls").innerText = copy_links;
-    document.getElementById('copy_btn').style.display = "block";
-    
+    document.getElementById("output").innerHTML = out;    
 }
 
 function init() {
     document.getElementById('urls').style.display = "none";
-    document.getElementById('copy_btn').style.display = "none";
 }
 
 function show_urls() {
