@@ -92,7 +92,7 @@ function show_plans() {
 	urldesc = urldesc.replace("https://","");
 	urldesc1 = urldesc.slice(0,10);
 	urldesc2 = urldesc.slice(urldesc.length-20,urldesc.length);
-	out += `<a onclick='show_plan("${plan}")' href='#'>${urldesc1} .. ${urldesc2}</a><a class='rmblock' onclick='remove("${plan}")' href='#'>Remove</a><br/>`;
+	out += `<a onclick='show_plan("${plan}")' href='#'>${urldesc1} .. ${urldesc2}</a><a class='rmblock' onclick='remove("${plan}")' href='#'>Remove</a><br/><br/>`;
     })      
     document.getElementById("plans").innerHTML = out;    
 }
