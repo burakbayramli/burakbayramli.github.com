@@ -584,6 +584,12 @@ function getLocation() {
     }
 }
 
+function hardCodePosition(latarg,lonarg) {
+    lat = latarg;
+    lon = lonarg;
+    document.getElementById("weatherposition").innerHTML = lat + " " + lon;    
+}
+
 function showPosition(position) {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
