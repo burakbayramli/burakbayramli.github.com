@@ -219,27 +219,32 @@ function fetchOpenMeteoForecast() {
             // --- Add Comprehensive AQI Data ---
             const aqi_hourly = aqiData.hourly;
             if (START_INDEX < aqi_hourly.pm2_5.length) {
-                // 1. Get Pollutant Concentrations
-                const pm25 = aqi_hourly.pm2_5[START_INDEX].toFixed(2);
-                const pm10 = aqi_hourly.pm10[START_INDEX].toFixed(2);
-                const co = aqi_hourly.carbon_monoxide[START_INDEX].toFixed(2);
-                const no2 = aqi_hourly.nitrogen_dioxide[START_INDEX].toFixed(2);
-                const so2 = aqi_hourly.sulphur_dioxide[START_INDEX].toFixed(2);
-                const o3 = aqi_hourly.ozone[START_INDEX].toFixed(2);
-                
-                // 2. Get Units
-                const pm_unit = aqiData.hourly_units.pm2_5; // µg/m³
-                const co_unit = aqiData.hourly_units.carbon_monoxide; // mg/m³
-                const gas_unit = aqiData.hourly_units.ozone; // µg/m³
-                
-                // 3. Determine Ranks for all 6 pollutants
-                const pm25_rank = get_aqi_category_and_rank(parseFloat(pm25)).rank;
-                const pm10_rank = get_pm10_aqi_rank(parseFloat(pm10));
-                const co_rank = get_co_aqi_rank(parseFloat(co));
-                const no2_rank = get_no2_aqi_rank(parseFloat(no2));
-                const so2_rank = get_so2_aqi_rank(parseFloat(so2));
-                const o3_rank = get_o3_aqi_rank(parseFloat(o3));
-                
+		// 1. Get Pollutant Concentrations
+		const pm25 = aqi_hourly.pm2_5[START_INDEX].toFixed(2);
+		const pm10 = aqi_hourly.pm10[START_INDEX].toFixed(2);
+		
+		// --- MODIFICATION HERE: Convert CO from µg/m³ to mg/m³ ---
+		// Assuming Open-Meteo returns CO in µg/m³ despite the unit label
+		const raw_co_ug = aqi_hourly.carbon_monoxide[START_INDEX];
+		const co = (raw_co_ug / 1000).toFixed(3); // Convert to mg/m³ for get_co_aqi_rank function
+
+		const no2 = aqi_hourly.nitrogen_dioxide[START_INDEX].toFixed(2);
+		const so2 = aqi_hourly.sulphur_dioxide[START_INDEX].toFixed(2);
+		const o3 = aqi_hourly.ozone[START_INDEX].toFixed(2);
+		
+		// 2. Get Units
+		const pm_unit = aqiData.hourly_units.pm2_5; // µg/m³
+		const co_unit = aqiData.hourly_units.carbon_monoxide; // mg/m³ (Note: The value is now converted)
+		const gas_unit = aqiData.hourly_units.ozone; // µg/m³
+		
+		// 3. Determine Ranks for all 6 pollutants
+		const pm25_rank = get_aqi_category_and_rank(parseFloat(pm25)).rank;
+		const pm10_rank = get_pm10_aqi_rank(parseFloat(pm10));
+		// co is now in mg/m³ as expected by the function
+		const co_rank = get_co_aqi_rank(parseFloat(co)); 
+		const no2_rank = get_no2_aqi_rank(parseFloat(no2));
+		const so2_rank = get_so2_aqi_rank(parseFloat(so2));
+		const o3_rank = get_o3_aqi_rank(parseFloat(o3));                
                 // 4. Determine Overall AQI (The MAX/Worst Rank)
                 const overall_rank = Math.max(pm25_rank, pm10_rank, co_rank, no2_rank, so2_rank, o3_rank);
                 
