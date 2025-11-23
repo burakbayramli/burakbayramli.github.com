@@ -1,582 +1,113 @@
+// ============================================================================
+// =================== New Open-Meteo Forecast & AQI Logic ====================
+// ============================================================================
 
-function Psychrometrics() {
+// WMO Weather Code Lookup Table
+const WMO_CODES = {
+    0: "Clear sky", 1: "Mostly clear", 2: "Partly cloudy", 3: "Overcast", 45: "Fog",
+    48: "Depositing rime fog", 51: "Light drizzle", 53: "Moderate drizzle", 55: "Dense drizzle",
+    56: "Light freezing drizzle", 57: "Dense freezing drizzle", 61: "Slight rain",
+    63: "Moderate rain", 65: "Heavy rain", 66: "Light freezing rain", 67: "Heavy freezing rain",
+    71: "Slight snow fall", 73: "Moderate snow fall", 75: "Heavy snow fall", 77: "Snow grains",
+    80: "Slight rain showers", 81: "Moderate rain showers", 82: "Violent rain showers",
+    85: "Slight snow showers", 86: "Heavy snow showers", 95: "Thunderstorm (Slight/Moderate)",
+    96: "Thunderstorm with slight hail", 99: "Thunderstorm with heavy hail"
+};
 
-  // Standard functions
-  var log = Math.log;
-  var exp = Math.exp;
-  var pow = Math.pow;
-  var min = Math.min;
-  var max = Math.max;
-  var abs = Math.abs;
+// --- AQI CATEGORIZATION FUNCTIONS (Simplified US EPA Standard) ---
 
-
-  /******************************************************************************************************
-   * Global constants
-   *****************************************************************************************************/
-
-  var ZERO_FAHRENHEIT_AS_RANKINE = 459.67;  // Zero degree Fahrenheit (°F) expressed as degree Rankine (°R).
-                                            // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 39.
-
-  var ZERO_CELSIUS_AS_KELVIN = 273.15;      // Zero degree Celsius (°C) expressed as Kelvin (K).
-                                            // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 39.
-
-  var R_DA_IP = 53.350;               // Universal gas constant for dry air (IP version) in ft lb_Force lb_DryAir⁻¹ R⁻¹.
-                                      // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1.
-
-  var R_DA_SI = 287.042;              // Universal gas constant for dry air (SI version) in J kg_DryAir⁻¹ K⁻¹.
-                                      // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1.
-
-  var INVALID = -99999;               // Invalid value (dimensionless).
-
-  var MAX_ITER_COUNT = 100            // Maximum number of iterations before exiting while loops.
-
-  var MIN_HUM_RATIO = 1e-7            // Minimum acceptable humidity ratio used/returned by any functions.
-                                      // Any value above 0 or below the MIN_HUM_RATIO will be reset to this value.
-
-  var FREEZING_POINT_WATER_IP = 32.0  // Freezing point of water in Fahrenheit.
-
-  var FREEZING_POINT_WATER_SI = 0.0   // Freezing point of water in Celsius.
-
-  var TRIPLE_POINT_WATER_IP = 32.018  // Triple point of water in Fahrenheit.
-
-  var TRIPLE_POINT_WATER_SI = 0.01    // Triple point of water in Celsius.
-
-
-
-  /******************************************************************************************************
-   * Helper functions
-   *****************************************************************************************************/
-
-  // Systems of units (IP or SI)
-  var PSYCHROLIB_UNITS = undefined;
-
-  // Floating-point tolerance value
-  var PSYCHROLIB_TOLERANCE = undefined;
-
-  this.IP = 1;
-  this.SI = 2;
-
-  // Function to set the system of units
-  // Note: this function *HAS TO BE CALLED* before the library can be used
-  this.SetUnitSystem = function(UnitSystem) {
-    if (UnitSystem != this.IP && UnitSystem != this.SI) {
-      throw new Error('UnitSystem must be IP or SI');
+/**
+ * Returns an object containing the category HTML (for display) and a numeric severity rank (1=Good, 6=Hazardous).
+ * Used for PM2.5 and for generating the Overall Category text.
+ */
+function get_aqi_category_and_rank(value) {
+    if (value <= 12.0) {
+        return { category: `<span style="color:green;">Good (0-50)</span>`, rank: 1, name: "Good" };
+    } else if (value <= 35.4) {
+        return { category: `<span style="color:yellow;">Moderate (51-100)</span>`, rank: 2, name: "Moderate" };
+    } else if (value <= 55.4) {
+        return { category: `<span style="color:orange;">Unhealthy for Sensitive Groups (101-150)</span>`, rank: 3, name: "Unhealthy for Sensitive Groups" };
+    } else if (value <= 150.4) {
+        return { category: `<span style="color:red;">Unhealthy (151-200)</span>`, rank: 4, name: "Unhealthy" };
+    } else if (value <= 250.4) {
+        return { category: `<span style="color:purple;">Very Unhealthy (201-300)</span>`, rank: 5, name: "Very Unhealthy" };
+    } else {
+        return { category: `<span style="color:maroon;">Hazardous (>300)</span>`, rank: 6, name: "Hazardous" };
     }
-    PSYCHROLIB_UNITS = UnitSystem;
-    // Define tolerance of temperature calculations
-    // The tolerance is the same in IP and SI
-    if (PSYCHROLIB_UNITS == this.IP)
-      PSYCHROLIB_TOLERANCE = 0.001 * 9. / 5.;
-    else
-      PSYCHROLIB_TOLERANCE = 0.001;
-  }
-
-  // Return system of units in use.
-  this.GetUnitSystem = function() {
-    return PSYCHROLIB_UNITS;
-  }
-
-  // Function to check if the current system of units is SI or IP
-  // The function exits in error if the system of units is undefined
-  this.isIP = function() {
-    if (PSYCHROLIB_UNITS == this.IP)
-      return true;
-    else if (PSYCHROLIB_UNITS == this.SI)
-      return false;
-    else
-      throw new Error("Unit system is not defined");
-  }
-
-
-  /******************************************************************************************************
-   * Conversion between temperature units
-   *****************************************************************************************************/
-
-  // Utility function to convert temperature to degree Rankine (°R)
-  // given temperature in degree Fahrenheit (°F).
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 section 3
-  this.GetTRankineFromTFahrenheit = function (T_F) { return T_F + ZERO_FAHRENHEIT_AS_RANKINE; }       /* exact */
-
-  // Utility function to convert temperature to degree Fahrenheit (°F)
-  // given temperature in degree Rankine (°R).
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 section 3
-  this.GetTFahrenheitFromTRankine = function (T_R) { return T_R - ZERO_FAHRENHEIT_AS_RANKINE; }       /* exact */
-
-  // Utility function to convert temperature to Kelvin (K)
-  // given temperature in degree Celsius (°C).
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 section 3
-  this.GetTKelvinFromTCelsius = function (T_C) { return T_C + ZERO_CELSIUS_AS_KELVIN; }               /* exact */
-
-  // Utility function to convert temperature to degree Celsius (°C)
-  // given temperature in Kelvin (K).
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 section 3
-  this.GetTCelsiusFromTKelvin = function (T_K) { return T_K - ZERO_CELSIUS_AS_KELVIN; }                /* exact */
-
-  /******************************************************************************************************
-   * Conversions between dew point, wet bulb, and relative humidity
-   *****************************************************************************************************/
-
-  // Return wet-bulb temperature given dry-bulb temperature, dew-point temperature, and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1
-  this.GetTWetBulbFromTDewPoint = function  // (o) Wet bulb temperature in °F [IP] or °C [SI]
-    ( TDryBulb                              // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , TDewPoint                             // (i) Dew point temperature in °F [IP] or °C [SI]
-    , Pressure                              // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var HumRatio;
-
-    if (!(TDewPoint <= TDryBulb))
-      throw new Error("Dew point temperature is above dry bulb temperature");
-
-    HumRatio = this.GetHumRatioFromTDewPoint(TDewPoint, Pressure);
-    return this.GetTWetBulbFromHumRatio(TDryBulb, HumRatio, Pressure);
-  }
-
-  // Return wet-bulb temperature given dry-bulb temperature, relative humidity, and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1
-  this.GetTWetBulbFromRelHum = function // (o) Wet bulb temperature in °F [IP] or °C [SI]
-    ( TDryBulb                          // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , RelHum                            // (i) Relative humidity [0-1]
-    , Pressure                          // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var HumRatio;
-
-    if (!(RelHum >= 0. && RelHum <= 1.))
-      throw new Error("Relative humidity is outside range [0,1]");
-
-    HumRatio = this.GetHumRatioFromRelHum(TDryBulb, RelHum, Pressure);
-    return this.GetTWetBulbFromHumRatio(TDryBulb, HumRatio, Pressure);
-  }
-
-  // Return relative humidity given dry-bulb temperature and dew-point temperature.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 22
-  this.GetRelHumFromTDewPoint = function  // (o) Relative humidity [0-1]
-    ( TDryBulb                            // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , TDewPoint                           // (i) Dew point temperature in °F [IP] or °C [SI]
-    ) {
-    var VapPres, SatVapPres;
-
-    if (!(TDewPoint <= TDryBulb))
-      throw new Error("Dew point temperature is above dry bulb temperature");
-
-    VapPres = this.GetSatVapPres(TDewPoint);
-    SatVapPres = this.GetSatVapPres(TDryBulb);
-    return VapPres / SatVapPres;
-  }
-
-
-  /******************************************************************************************************
-   * Conversions between dew point, or relative humidity and vapor pressure
-   *****************************************************************************************************/
-
-  // Return partial pressure of water vapor as a function of relative humidity and temperature.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 12, 22
-  this.GetVapPresFromRelHum = function  // (o) Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]
-    ( TDryBulb                          // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , RelHum                            // (i) Relative humidity [0-1]
-    ) {
-
-    if (!(RelHum >= 0. && RelHum <= 1.))
-      throw new Error("Relative humidity is outside range [0,1]");
-
-    return RelHum * this.GetSatVapPres(TDryBulb);
-  }
-
-  // Return relative humidity given dry-bulb temperature and vapor pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 12, 22
-  this.GetRelHumFromVapPres = function  // (o) Relative humidity [0-1]
-    ( TDryBulb                          // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , VapPres                           // (i) Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]
-    ) {
-
-    if (!(VapPres >= 0.))
-      throw new Error("Partial pressure of water vapor in moist air is negative");
-
-    return VapPres / this.GetSatVapPres(TDryBulb);
-  }
-
-  // Helper function returning the derivative of the natural log of the saturation vapor pressure
-  // as a function of dry-bulb temperature.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn. 5 & 6
-  this.dLnPws_ = function       // (o)  Derivative of natural log of vapor pressure of saturated air in Psi [IP] or Pa [SI]
-    ( TDryBulb                  // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    ) {
-    var dLnPws, T;
-
-    if (this.isIP())
-    {
-      T = this.GetTRankineFromTFahrenheit(TDryBulb);
-
-      if (TDryBulb <= TRIPLE_POINT_WATER_IP)
-        dLnPws = 1.0214165E+04 / pow(T, 2) - 5.3765794E-03 + 2 * 1.9202377E-07 * T
-                 + 3 * 3.5575832E-10 * pow(T, 2) - 4 * 9.0344688E-14 * pow(T, 3) + 4.1635019 / T;
-      else
-        dLnPws = 1.0440397E+04 / pow(T, 2) - 2.7022355E-02 + 2 * 1.2890360E-05 * T
-                 - 3 * 2.4780681E-09 * pow(T, 2) + 6.5459673 / T;
-    }
-    else
-    {
-      T = this.GetTKelvinFromTCelsius(TDryBulb);
-
-      if (TDryBulb <= TRIPLE_POINT_WATER_SI)
-        dLnPws = 5.6745359E+03 / pow(T, 2) - 9.677843E-03 + 2 * 6.2215701E-07 * T
-                 + 3 * 2.0747825E-09 * pow(T, 2) - 4 * 9.484024E-13 * pow(T, 3) + 4.1635019 / T;
-      else
-        dLnPws = 5.8002206E+03 / pow(T, 2) - 4.8640239E-02 + 2 * 4.1764768E-05 * T
-                 - 3 * 1.4452093E-08 * pow(T, 2) + 6.5459673 / T;
-    }
-
-    return dLnPws;
-  }
-
-  // Return dew-point temperature given dry-bulb temperature and vapor pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn. 5 and 6
-  // Notes: the dew point temperature is solved by inverting the equation giving water vapor pressure
-  // at saturation from temperature rather than using the regressions provided
-  // by ASHRAE (eqn. 37 and 38) which are much less accurate and have a
-  // narrower range of validity.
-  // The Newton-Raphson (NR) method is used on the logarithm of water vapour
-  // pressure as a function of temperature, which is a very smooth function
-  // Convergence is usually achieved in 3 to 5 iterations.
-  // TDryBulb is not really needed here, just used for convenience.
-  this.GetTDewPointFromVapPres = function // (o) Dew Point temperature in °F [IP] or °C [SI]
-    ( TDryBulb                            // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , VapPres                             // (i) Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]
-    ) {
-   // Bounds function of the system of units
-  var BOUNDS              // Domain of validity of the equations
-
-  if (this.isIP())
-  {
-    BOUNDS = [-148., 392.];   // Domain of validity of the equations
-  }
-  else
-  {
-    BOUNDS = [-100., 200.];   // Domain of validity of the equations
-  }
-
-  // Bounds outside which a solution cannot be found
-  if (VapPres < this.GetSatVapPres(BOUNDS[0]) || VapPres > this.GetSatVapPres(BOUNDS[1]))
-    throw new Error("Partial pressure of water vapor is outside range of validity of equations");
-
-  // We use NR to approximate the solution.
-  // First guess
-  var TDewPoint = TDryBulb;      // Calculated value of dew point temperatures, solved for iteratively in °F [IP] or °C [SI]
-  var lnVP = log(VapPres);       // Natural logarithm of partial pressure of water vapor pressure in moist air
-
-  var TDewPoint_iter;            // Value of TDewPoint used in NR calculation
-  var lnVP_iter;                 // Value of log of vapor water pressure used in NR calculation
-  var index = 1;
-  do
-  {
-    // Current point
-    TDewPoint_iter = TDewPoint;
-    lnVP_iter = log(this.GetSatVapPres(TDewPoint_iter));
-
-    // Derivative of function, calculated analytically
-    var d_lnVP = this.dLnPws_(TDewPoint_iter);
-
-    // New estimate, bounded by domain of validity of eqn. 5 and 6
-    TDewPoint = TDewPoint_iter - (lnVP_iter - lnVP) / d_lnVP;
-    TDewPoint = max(TDewPoint, BOUNDS[0]);
-    TDewPoint = min(TDewPoint, BOUNDS[1]);
-
-    if (index > MAX_ITER_COUNT)
-      throw new Error("Convergence not reached in GetTDewPointFromVapPres. Stopping.");
-
-    index++;
-  }
-  while (abs(TDewPoint - TDewPoint_iter) > PSYCHROLIB_TOLERANCE);
-  return min(TDewPoint, TDryBulb);
-  }
-
-  // Return vapor pressure given dew point temperature.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn. 36
-  this.GetVapPresFromTDewPoint = function // (o) Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]
-    ( TDewPoint                           // (i) Dew point temperature in °F [IP] or °C [SI]
-    ) {
-    return this.GetSatVapPres(TDewPoint);
-  }
-
-
-  /******************************************************************************************************
-   * Conversions from wet-bulb temperature, dew-point temperature, or relative humidity to humidity ratio
-   *****************************************************************************************************/
-
-  // Return wet-bulb temperature given dry-bulb temperature, humidity ratio, and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 33 and 35 solved for Tstar
-  this.GetTWetBulbFromHumRatio = function // (o) Wet bulb temperature in °F [IP] or °C [SI]
-    ( TDryBulb                            // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , HumRatio                            // (i) Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    , Pressure                            // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    // Declarations
-    var Wstar;
-    var TDewPoint, TWetBulb, TWetBulbSup, TWetBulbInf, BoundedHumRatio;
-    var index = 1;
-
-    if (!(HumRatio >= 0.))
-      throw new Error("Humidity ratio is negative");
-    BoundedHumRatio = max(HumRatio, MIN_HUM_RATIO);
-
-    TDewPoint = this.GetTDewPointFromHumRatio(TDryBulb, BoundedHumRatio, Pressure);
-
-    // Initial guesses
-    TWetBulbSup = TDryBulb;
-    TWetBulbInf = TDewPoint;
-    TWetBulb = (TWetBulbInf + TWetBulbSup) / 2.;
-
-    // Bisection loop
-    while ((TWetBulbSup - TWetBulbInf) > PSYCHROLIB_TOLERANCE) {
-      // Compute humidity ratio at temperature Tstar
-      Wstar = this.GetHumRatioFromTWetBulb(TDryBulb, TWetBulb, Pressure);
-
-      // Get new bounds
-      if (Wstar > BoundedHumRatio)
-        TWetBulbSup = TWetBulb;
-      else
-        TWetBulbInf = TWetBulb;
-
-      // New guess of wet bulb temperature
-      TWetBulb = (TWetBulbSup + TWetBulbInf) / 2.;
-
-      if (index > MAX_ITER_COUNT)
-        throw new Error("Convergence not reached in GetTWetBulbFromHumRatio. Stopping.");
-
-      index++;
-    }
-
-    return TWetBulb;
-  }
-
-  // Return humidity ratio given dry-bulb temperature, wet-bulb temperature, and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 33 and 35
-  this.GetHumRatioFromTWetBulb = function // (o) Humidity Ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    ( TDryBulb                            // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , TWetBulb                            // (i) Wet bulb temperature in °F [IP] or °C [SI]
-    , Pressure                            // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var Wsstar;
-    var HumRatio = INVALID
-
-    if (!(TWetBulb <= TDryBulb))
-      throw new Error("Wet bulb temperature is above dry bulb temperature");
-
-      Wsstar = this.GetSatHumRatio(TWetBulb, Pressure);
-
-      if (this.isIP())
-      {
-        if (TWetBulb >= FREEZING_POINT_WATER_IP)
-          HumRatio = ((1093. - 0.556 * TWetBulb) * Wsstar - 0.240 * (TDryBulb - TWetBulb))
-          / (1093. + 0.444 * TDryBulb - TWetBulb);
-        else
-          HumRatio = ((1220. - 0.04 * TWetBulb) * Wsstar - 0.240 * (TDryBulb - TWetBulb))
-          / (1220. + 0.444 * TDryBulb - 0.48 * TWetBulb);
-      }
-      else
-      {
-        if (TWetBulb >= FREEZING_POINT_WATER_SI)
-          HumRatio = ((2501. - 2.326 * TWetBulb) * Wsstar - 1.006 * (TDryBulb - TWetBulb))
-             / (2501. + 1.86 * TDryBulb - 4.186 * TWetBulb);
-        else
-          HumRatio = ((2830. - 0.24 * TWetBulb) * Wsstar - 1.006 * (TDryBulb - TWetBulb))
-             / (2830. + 1.86 * TDryBulb - 2.1 * TWetBulb);
-      }
-      // Validity check.
-      return max(HumRatio, MIN_HUM_RATIO);
-    }
-
-  // Return humidity ratio given dry-bulb temperature, relative humidity, and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1
-  this.GetHumRatioFromRelHum = function // (o) Humidity Ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    ( TDryBulb                          // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , RelHum                            // (i) Relative humidity [0-1]
-    , Pressure                          // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var VapPres;
-
-    if (!(RelHum >= 0. && RelHum <= 1.))
-      throw new Error("Relative humidity is outside range [0,1]");
-
-    VapPres = this.GetVapPresFromRelHum(TDryBulb, RelHum);
-    return this.GetHumRatioFromVapPres(VapPres, Pressure);
-  }
-
-
-  // Return dew-point temperature given dry-bulb temperature, humidity ratio, and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1
-  this.GetTDewPointFromHumRatio = function  // (o) Dew Point temperature in °F [IP] or °C [SI]
-    ( TDryBulb                              // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , HumRatio                              // (i) Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    , Pressure                              // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var VapPres;
-
-    if (!(HumRatio >= 0.))
-      throw new Error("Humidity ratio is negative");
-
-    VapPres = this.GetVapPresFromHumRatio(HumRatio, Pressure);
-    return this.GetTDewPointFromVapPres(TDryBulb, VapPres);
-  }
-
-
-  /******************************************************************************************************
-   * Conversions between humidity ratio and vapor pressure
-   *****************************************************************************************************/
-
-  // Return humidity ratio given water vapor pressure and atmospheric pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 20
-  this.GetHumRatioFromVapPres = function  // (o) Humidity Ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    ( VapPres                             // (i) Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]
-    , Pressure                            // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var HumRatio;
-
-    if (!(VapPres >= 0.))
-      throw new Error("Partial pressure of water vapor in moist air is negative");
-
-    HumRatio = 0.621945 * VapPres / (Pressure - VapPres);
-
-    // Validity check.
-    return max(HumRatio, MIN_HUM_RATIO);
-  }
-
-  // Return vapor pressure given humidity ratio and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 20 solved for pw
-  this.GetVapPresFromHumRatio = function  // (o) Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]
-    ( HumRatio                            // (i) Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    , Pressure                            // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var VapPres, BoundedHumRatio;
-
-    if (!(HumRatio >= 0.))
-      throw new Error("Humidity ratio is negative");
-    BoundedHumRatio = max(HumRatio, MIN_HUM_RATIO);
-
-    VapPres = Pressure * BoundedHumRatio / (0.621945 + BoundedHumRatio);
-    return VapPres;
-  }
-
-  /******************************************************************************************************
-   * Saturated Air Calculations
-   *****************************************************************************************************/
-
-  // Return saturation vapor pressure given dry-bulb temperature.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn. 5 & 6
-  // Important note: the ASHRAE formulae are defined above and below the freezing point but have
-  // a discontinuity at the freezing point. This is a small inaccuracy on ASHRAE's part: the formulae
-  // should be defined above and below the triple point of water (not the feezing point) in which case
-  // the discontinuity vanishes. It is essential to use the triple point of water otherwise function
-  // GetTDewPointFromVapPres, which inverts the present function, does not converge properly around
-  // the freezing point.
-  this.GetSatVapPres = function // (o) Vapor Pressure of saturated air in Psi [IP] or Pa [SI]
-    ( TDryBulb                  // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    ) {
-    var LnPws, T;
-
-    if (this.isIP())
-    {
-      if (!(TDryBulb >= -148. && TDryBulb <= 392.))
-        throw new Error("Dry bulb temperature is outside range [-148, 392]");
-
-      T = this.GetTRankineFromTFahrenheit(TDryBulb);
-      if (TDryBulb <= TRIPLE_POINT_WATER_IP)
-        LnPws = (-1.0214165E+04 / T - 4.8932428 - 5.3765794E-03 * T + 1.9202377E-07 * T * T
-                + 3.5575832E-10 * pow(T, 3) - 9.0344688E-14 * pow(T, 4) + 4.1635019 * log(T));
-      else
-        LnPws = -1.0440397E+04 / T - 1.1294650E+01 - 2.7022355E-02 * T + 1.2890360E-05 * T * T
-                - 2.4780681E-09 * pow(T, 3) + 6.5459673 * log(T);
-    }
-    else
-    {
-      if (!(TDryBulb >= -100. && TDryBulb <= 200.))
-        throw new Error("Dry bulb temperature is outside range [-100, 200]");
-
-      T = this.GetTKelvinFromTCelsius(TDryBulb);
-      if (TDryBulb <= TRIPLE_POINT_WATER_SI)
-        LnPws = -5.6745359E+03 / T + 6.3925247 - 9.677843E-03 * T + 6.2215701E-07 * T * T
-                + 2.0747825E-09 * pow(T, 3) - 9.484024E-13 * pow(T, 4) + 4.1635019 * log(T);
-      else
-        LnPws = -5.8002206E+03 / T + 1.3914993 - 4.8640239E-02 * T + 4.1764768E-05 * T * T
-                - 1.4452093E-08 * pow(T, 3) + 6.5459673 * log(T);
-    }
-
-    return exp(LnPws);
-  }
-
-  // Return humidity ratio of saturated air given dry-bulb temperature and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 36, solved for W
-  this.GetSatHumRatio = function  // (o) Humidity ratio of saturated air in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    ( TDryBulb                    // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , Pressure                    // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var SatVaporPres, SatHumRatio;
-
-    SatVaporPres = this.GetSatVapPres(TDryBulb);
-    SatHumRatio = 0.621945 * SatVaporPres / (Pressure - SatVaporPres);
-
-    // Validity check.
-    return max(SatHumRatio, MIN_HUM_RATIO);
-  }
-
-  // Return saturated air enthalpy given dry-bulb temperature and pressure.
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1
-  this.GetSatAirEnthalpy = function // (o) Saturated air enthalpy in Btu lb⁻¹ [IP] or J kg⁻¹ [SI]
-    ( TDryBulb                      // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , Pressure                      // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    return this.GetMoistAirEnthalpy(TDryBulb, this.GetSatHumRatio(TDryBulb, Pressure));
-  }
-
-
-  /******************************************************************************************************
-   * Moist Air Calculations
-   *****************************************************************************************************/
-
-  // Return Vapor pressure deficit given dry-bulb temperature, humidity ratio, and pressure.
-  // Reference: see Oke (1987) eqn. 2.13a
-  this.GetVaporPressureDeficit = function  // (o) Vapor pressure deficit in Psi [IP] or Pa [SI]
-    ( TDryBulb            // (i) Dry bulb temperature in °F [IP] or °C [SI]
-    , HumRatio            // (i) Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]
-    , Pressure            // (i) Atmospheric pressure in Psi [IP] or Pa [SI]
-    ) {
-    var RelHum;
-
-    if (!(HumRatio >= 0.))
-      throw new Error("Humidity ratio is negative");
-
-    RelHum = this.GetRelHumFromHumRatio(TDryBulb, HumRatio, Pressure);
-    return this.GetSatVapPres(TDryBulb) * (1. - RelHum);
-  }
-
-
-  /******************************************************************************************************
-   * Standard atmosphere
-   *****************************************************************************************************/
-
-  // Return standard atmosphere barometric pressure, given the elevation (altitude).
-  // Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 3
-  this.GetStandardAtmPressure = function  // (o) Standard atmosphere barometric pressure in Psi [IP] or Pa [SI]
-    ( Altitude                            // (i) Altitude in ft [IP] or m [SI]
-    ) {
-    var Pressure;
-
-    if (this.isIP())
-      Pressure = 14.696 * pow(1. - 6.8754e-06 * Altitude, 5.2559);
-    else
-      Pressure = 101325.* pow(1. - 2.25577e-05 * Altitude, 5.2559);
-    return Pressure;
-  }
-
-
-
 }
 
-// ============================================================================
-// ============================================================================
-// ============================================================================
-// ============================================================================
-// ============================================================================
+/**
+ * Returns the numeric severity rank (1=Good, 6=Hazardous) for PM10 (using US EPA 24hr breakpoints in µg/m³).
+ */
+function get_pm10_aqi_rank(value) {
+    if (value <= 54) return 1; // Good
+    if (value <= 154) return 2; // Moderate
+    if (value <= 254) return 3; // Unhealthy for Sensitive Groups
+    if (value <= 354) return 4; // Unhealthy
+    if (value <= 424) return 5; // Very Unhealthy
+    return 6; // Hazardous
+}
+
+/**
+ * Returns the numeric severity rank for Ozone (O3), using US EPA 1-hour breakpoints (in µg/m³ for high concentrations).
+ */
+function get_o3_aqi_rank(value) {
+    if (value <= 120) return 1; // Good
+    if (value <= 168) return 2; // Moderate
+    if (value <= 228) return 3; // Unhealthy for Sensitive Groups
+    if (value <= 404) return 4; // Unhealthy
+    if (value <= 504) return 5; // Very Unhealthy
+    return 6; // Hazardous
+}
+
+/**
+ * Returns the numeric severity rank for Nitrogen Dioxide (NO2), using US EPA 1-hour breakpoints (in µg/m³).
+ */
+function get_no2_aqi_rank(value) {
+    if (value <= 100) return 1; // Good
+    if (value <= 200) return 2; // Moderate
+    if (value <= 399) return 3; // Unhealthy for Sensitive Groups
+    if (value <= 799) return 4; // Unhealthy
+    if (value <= 1000) return 5; // Very Unhealthy
+    return 6; // Hazardous
+}
+
+/**
+ * Returns the numeric severity rank for Carbon Monoxide (CO), using simplified breakpoints (in mg/m³ as provided by Open-Meteo).
+ * Note: A true AQI uses a complex 8-hour average and conversion from ppm, this is a simplified hourly rank.
+ */
+function get_co_aqi_rank(value) {
+    if (value <= 5) return 1; // Good (~4.4 ppm)
+    if (value <= 10) return 2; // Moderate (~9.4 ppm)
+    if (value <= 17) return 3; // Unhealthy for Sensitive Groups
+    if (value <= 34) return 4; // Unhealthy
+    if (value <= 40) return 5; // Very Unhealthy
+    return 6; // Hazardous
+}
+
+/**
+ * Returns the numeric severity rank for Sulfur Dioxide (SO2), using US EPA 1-hour breakpoints (in µg/m³).
+ */
+function get_so2_aqi_rank(value) {
+    if (value <= 92) return 1; // Good
+    if (value <= 184) return 2; // Moderate
+    if (value <= 300) return 3; // Unhealthy for Sensitive Groups
+    if (value <= 600) return 4; // Unhealthy
+    if (value <= 800) return 5; // Very Unhealthy
+    return 6; // Hazardous
+}
+
+// --- STANDARD HELPER FUNCTIONS ---
+
+function get_weather_description(code) {
+    // Convert float to integer for lookup
+    return WMO_CODES[Math.round(code)] || "Unknown/N/A";
+}
+
+
+// Shared global location variables
+var lat;
+var lon;
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -603,141 +134,204 @@ function getLocationFromPicker() {
     document.getElementById("weatherposition").innerHTML = lat + " " + lon;    
 }
 
-function fetchToday() {
-    var key = localStorage.getItem('owm_key');
-    var endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=metric&appid=${key}`;
-    console.log(endpoint);
-    fetch(endpoint)
-	.then(function (response) {
-	    if (200 !== response.status) {
-		console.log(
-		    "Looks like there was a problem. Status Code: " + response.status
-		);
-		return;
-	    }
-	    response.json().then(function (x) {
-		//console.log(data);
-		var psychrolib = new Psychrometrics();
-		psychrolib.SetUnitSystem(psychrolib.SI);
-		pressure = psychrolib.GetStandardAtmPressure(0);
-		var res = "";
-		var dayname = new Date(x.dt * 1000).toLocaleDateString("en", {
-		    weekday: "long",
-		});
-		var descr = x.weather[0]['description']
-		var temp = x.main.temp;
-		var hum = x.main.humidity;
-		var wind = x.wind.deg + " / " + x.wind.speed;
-		var wbt = psychrolib.GetTWetBulbFromRelHum(temp, hum/100.0, pressure);
-		wbt = Number(wbt.toFixed(2));
-		var d = new Date(parseInt(x.dt)*1000);
-		var p1 = d.toLocaleDateString().slice(0,5);
-		var p2 = d.toLocaleTimeString('en-US',{ hour12: false });
-		var dt = p1 + " " + p2 ;
-		res += `<p>Status: ${descr}, ${p2}</p>`;
-		res += `<p>Temperature ${temp} C</p>`;
-		res += `<p>Humidity: ${hum}</p>`;
-		res += `<p>Wind: ${wind}</p>`;
-		res += `<p>Wet Bulb: ${wbt}</p>`;
-		document.getElementById('tdout').innerHTML = res;
-	    });
-	})
-	.catch(function (err) {
-	    console.log("Fetch Error :-S", err);
-	});
-}
 
-function fetchForecast() {
-    var key = localStorage.getItem('owm_key');
-    var endpoint = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=metric&appid=${key}`;
+// NEW: Main function to fetch and display the Open-Meteo 3-hour forecast & AQI
+function fetchOpenMeteoForecast() {
+    if(typeof lat === 'undefined' || typeof lon === 'undefined') {
+	document.getElementById("weatherposition").innerHTML = "<font color='red'>Position not set</font>";
+    document.getElementById('tdout').innerHTML = ''; // Clear output
+	return;
+    }
+
+    const FORECAST_DAYS = 5;
+    const STEP_HOURS = 3;
+    const WEATHER_URL = "https://api.open-meteo.com/v1/forecast";
+    const AIR_QUALITY_URL = "https://air-quality-api.open-meteo.com/v1/air-quality";
+
+
+    // 1. Define API Endpoints
+    // ADDED: relative_humidity_2m to the weather API call
+    const WEATHER_ENDPOINT = `${WEATHER_URL}?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,wind_speed_10m,weathercode&forecast_days=${FORECAST_DAYS}&timezone=auto&temperature_unit=celsius&wind_speed_unit=kmh`;
     
-    fetch(endpoint)
-	.then(function (response) {
-	    if (200 !== response.status) {
-		console.log(
-		    "Looks like there was a problem. Status Code: " + response.status
-		);
-		return;
-	    }
-	    response.json().then(function (data) {
-		//console.log(data);
-		var psychrolib = new Psychrometrics();
-		psychrolib.SetUnitSystem(psychrolib.SI);
-		pressure = psychrolib.GetStandardAtmPressure(0);
+    // UPDATED: Requesting ALL six criteria pollutants for comprehensive AQI calculation
+    const AQI_ENDPOINT = `${AIR_QUALITY_URL}?latitude=${lat}&longitude=${lon}&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&timezone=auto`;
+    
+    document.getElementById('tdout').innerHTML = "Fetching weather and air quality data...";
+    document.getElementById('fcout').innerHTML = "";
 
-		var res = "";
-		res += "<table>";
-		res += "<tr><td>Day</td><td>Type</td><td>Temp</td><td>Hum</td><td>WB</td><td>Date</td></tr>";
-		data.list.forEach( function (x) {
-		    var dayname = new Date(x.dt * 1000).toLocaleDateString("en", {
-			weekday: "long",
-		    });
-		    var descr = x.weather[0]['description']
-		    var temp = x.main.temp;
-		    var hum = x.main.humidity;
-		    var wbt = psychrolib.GetTWetBulbFromRelHum(temp, hum/100.0, pressure);
-		    wbt = Number(wbt.toFixed(2));
-		    var d = new Date(parseInt(x.dt)*1000);
-		    var p1 = d.toLocaleDateString().slice(0,5);
-		    var p2 = d.toLocaleTimeString('en-US',{ hour12: false });
-		    var dt = p1 + " " + p2 ;
-		    res += `<tr><td>${dayname}</><td>${descr}</td><td>${temp}</td><td>${hum}</td><td>${wbt}</td><td>${dt}</td></tr>`;		    		    
-		});
-		res += "</table>";
-		document.getElementById('fcout').innerHTML = res;
-	    });
+    // 2. Fetch both in parallel using Promise.all
+    Promise.all([
+        fetch(WEATHER_ENDPOINT).then(res => {
+            if (!res.ok) throw new Error(`Weather HTTP error! status: ${res.status}`);
+            return res.json();
+        }),
+        fetch(AQI_ENDPOINT).then(res => {
+            if (!res.ok) throw new Error(`AQI HTTP error! status: ${res.status}`);
+            return res.json();
+        })
+    ])
+	.then(([weatherData, aqiData]) => {
+        const hourly = weatherData.hourly;
+        const remote_timezone_str = weatherData.timezone;
+        const temp_unit = weatherData.hourly_units.temperature_2m;
+        const wind_unit = weatherData.hourly_units.wind_speed_10m;
+        const humidity_unit = weatherData.hourly_units.relative_humidity_2m;
+        
+        // --- Automated Time Index Calculation (Shared for Weather & AQI) ---
+        
+        const now_ms = new Date().getTime();
+        const start_of_day_utc_str = hourly.time[0] + ':00.000Z';
+        const start_of_day_utc = new Date(start_of_day_utc_str);
+        const timezone_offset_ms = weatherData.timezone_abbreviation ? weatherData.timezone_abbreviation.slice(3) * 60 * 1000 : 0; 
+        const MS_PER_HOUR = 3600000;
+        const time_elapsed_ms = now_ms - start_of_day_utc.getTime() + timezone_offset_ms;
+        const START_INDEX = Math.floor(time_elapsed_ms / MS_PER_HOUR);
+
+        // --- Process Current Status (tdout) ---
+        let today_out = `<p>Current Status</p>`;
+        
+        if (START_INDEX >= 0 && START_INDEX < hourly.time.length) {
+            const current_time_iso = hourly.time[START_INDEX];
+            const current_dt = new Date(current_time_iso); 
+            const current_temp = hourly.temperature_2m[START_INDEX];
+            const current_humidity = hourly.relative_humidity_2m[START_INDEX];
+            const current_wind = hourly.wind_speed_10m[START_INDEX];
+            const current_precip_prob = hourly.precipitation_probability[START_INDEX];
+            const current_desc = get_weather_description(hourly.weathercode[START_INDEX]);
+            
+            const time_options = { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                timeZoneName: 'short',
+                timeZone: remote_timezone_str
+            };
+            const current_time_str = current_dt.toLocaleString('en-US', time_options);
+
+            today_out += `<p>Time: ${current_time_str}</p>`;
+            today_out += `<p>Condition: ${current_desc}</p>`;
+            today_out += `<p>Temperature: ${current_temp} ${temp_unit}</p>`;
+            // ADDED: Display Humidity
+            today_out += `<p>Humidity: ${current_humidity} ${humidity_unit}</p>`;
+            today_out += `<p>Wind Speed: ${current_wind} ${wind_unit}</p>`;
+            today_out += `<p>Precip. Prob: ${current_precip_prob}%</p>`;
+
+            // --- Add Comprehensive AQI Data ---
+            const aqi_hourly = aqiData.hourly;
+            if (START_INDEX < aqi_hourly.pm2_5.length) {
+                // 1. Get Pollutant Concentrations
+                const pm25 = aqi_hourly.pm2_5[START_INDEX].toFixed(2);
+                const pm10 = aqi_hourly.pm10[START_INDEX].toFixed(2);
+                const co = aqi_hourly.carbon_monoxide[START_INDEX].toFixed(2);
+                const no2 = aqi_hourly.nitrogen_dioxide[START_INDEX].toFixed(2);
+                const so2 = aqi_hourly.sulphur_dioxide[START_INDEX].toFixed(2);
+                const o3 = aqi_hourly.ozone[START_INDEX].toFixed(2);
+                
+                // 2. Get Units
+                const pm_unit = aqiData.hourly_units.pm2_5; // µg/m³
+                const co_unit = aqiData.hourly_units.carbon_monoxide; // mg/m³
+                const gas_unit = aqiData.hourly_units.ozone; // µg/m³
+                
+                // 3. Determine Ranks for all 6 pollutants
+                const pm25_rank = get_aqi_category_and_rank(parseFloat(pm25)).rank;
+                const pm10_rank = get_pm10_aqi_rank(parseFloat(pm10));
+                const co_rank = get_co_aqi_rank(parseFloat(co));
+                const no2_rank = get_no2_aqi_rank(parseFloat(no2));
+                const so2_rank = get_so2_aqi_rank(parseFloat(so2));
+                const o3_rank = get_o3_aqi_rank(parseFloat(o3));
+                
+                // 4. Determine Overall AQI (The MAX/Worst Rank)
+                const overall_rank = Math.max(pm25_rank, pm10_rank, co_rank, no2_rank, so2_rank, o3_rank);
+                
+                // 5. Get the corresponding category text for the worst rank
+                let worst_rank_value = 1.0; // Placeholder for rank 1
+                if (overall_rank === 2) worst_rank_value = 15.0; // Moderate PM2.5 range
+                else if (overall_rank === 3) worst_rank_value = 40.0; // USG PM2.5 range
+                else if (overall_rank === 4) worst_rank_value = 60.0; // Unhealthy PM2.5 range
+                else if (overall_rank === 5) worst_rank_value = 160.0; // Very Unhealthy PM2.5 range
+                else if (overall_rank === 6) worst_rank_value = 300.0; // Hazardous PM2.5 range
+                
+                const overall_score_category = get_aqi_category_and_rank(worst_rank_value).category;
+                const dominant_pollutant_name = get_aqi_category_and_rank(worst_rank_value).name;
+
+
+                today_out += `<p>Air Quality Index (AQI)</p>`;
+                // UPDATED: Overall AQI Score based on the worst pollutant rank
+                today_out += `<p>Overall AQI Score: ${overall_score_category} (Worst Pollutant: ${dominant_pollutant_name})</p>`;
+                today_out += `<p>Pollutant Concentrations:</p>`;
+                today_out += `<ul>`;
+                today_out += `<li>PM2.5: ${pm25} ${pm_unit} (${pm25_rank})</li>`;
+                today_out += `<li>PM10: ${pm10} ${pm_unit} (${pm10_rank})</li>`;
+                today_out += `<li>Ozone (O3): ${o3} ${gas_unit} (${o3_rank})</li>`;
+                today_out += `<li>Nitrogen Dioxide (NO2): ${no2} ${gas_unit} (${no2_rank})</li>`;
+                today_out += `<li>Carbon Monoxide (CO): ${co} ${co_unit} (${co_rank})</li>`;
+                today_out += `<li>Sulfur Dioxide (SO2): ${so2} ${gas_unit} (${so2_rank})</li>`;
+                today_out += `</ul>`;
+                
+            } else {
+                 today_out += `<p>Air quality data unavailable for current hour.</p>`;
+            }
+
+        } else {
+            today_out += `<p>Could not retrieve current status data.</p>`;
+        }
+        document.getElementById('tdout').innerHTML = today_out;
+
+        // --- Print the Forecast Table (fcout) ---
+        let forecast_out = `<p>3-Hourly Weather Forecast</p>`;
+        forecast_out += "<table>";
+        // ADDED: Humidity column to the table header
+        forecast_out += `<tr><th>Time (${remote_timezone_str})</th><th>Temp (${temp_unit})</th><th>Humidity (${humidity_unit})</th><th>Precip. Prob</th><th>Wind (${wind_unit})</th><th>Condition</th></tr>`;
+
+        // Loop for the next 6 intervals (0, 3, 6, 9, 12, 15 hours), covering 18 hours.
+        const max_intervals = 20;
+        for (let i = 0; i < max_intervals; i++) {
+            const index = START_INDEX + (i * STEP_HOURS);
+            
+            if (index < hourly.time.length) {
+                const time_iso = hourly.time[index];
+                const dt_obj = new Date(time_iso);
+                
+                const time_options = { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    timeZone: remote_timezone_str 
+                };
+                const display_time = dt_obj.toLocaleString('en-US', time_options);
+                
+                const temp = hourly.temperature_2m[index].toFixed(1);
+                // ADDED: humidity data for the forecast row
+                const humidity = hourly.relative_humidity_2m[index];
+                const precip_prob = hourly.precipitation_probability[index];
+                const wind_speed = hourly.wind_speed_10m[index].toFixed(1);
+                const weather_desc = get_weather_description(hourly.weathercode[index]);
+                
+                // ADDED: Humidity cell to the table row
+                forecast_out += `<tr><td>${display_time}</td><td>${temp}</td><td>${humidity}%</td><td>${precip_prob}%</td><td>${wind_speed}</td><td>${weather_desc}</td></tr>`;
+            } else {
+                break; // Stop if we run out of data
+            }
+        }
+        forecast_out += "</table>";
+        document.getElementById('fcout').innerHTML = forecast_out;
+
 	})
-	.catch(function (err) {
-	    console.log("Fetch Error :-S", err);
+	.catch(error => {
+	    document.getElementById('tdout').innerHTML = `<p style="color:red;">Error fetching data. Ensure your position is set and try again. Details: ${error.message}</p>`;
+        document.getElementById('fcout').innerHTML = '';
+	    console.error("Fetch Error:", error);
 	});
 }
+
 
 function init() {
-    document.getElementById("owm_key").value = localStorage.getItem('owm_key');
+    // Left empty as there is no API key to initialize
 }
 
 function getWeatherData() {
-
-    if(typeof lat === 'undefined') {
-	document.getElementById("weatherposition").innerHTML = "<font color='red'>Position not set</font>";
-	return;
-    }
-
-    fetchForecast();
-    fetchToday();    
-}
-
-function set_owm_key() {
-    localStorage.setItem('owm_key',document.getElementById("owm_key").value);
-}
-
-function getPollution() {
-    if(typeof lat === 'undefined') {
-	document.getElementById("weatherposition").innerHTML = "<font color='red'>Position not set</font>";
-	return;
-    }
-    var key = localStorage.getItem('owm_key');
-    var endpoint = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${key}`;
-    fetch(endpoint)
-	.then(function (response) {
-	    if (200 !== response.status) {
-		console.log(
-		    "Looks like there was a problem. Status Code: " + response.status
-		);
-		return;
-	    }
-	    out = "";
-	    response.json().then(function (data) {
-		var res = data['list'][0];
-		console.log(res['main']['aqi']);
-		out += "<br/>AQI: " + res['main']['aqi'] + "<br/><br/>";
-		Object.keys(res['components']).forEach(function(x) {
-		    out += x + ": " + res['components'][x] + "<br/>";
-		});
-		document.getElementById('tdout').innerHTML = out;
-	    });
-	})
-	.catch(function (err) {
-	    console.log("Fetch Error :-S", err);
-	});
+    // Single entry point now fetches both weather and AQI
+    fetchOpenMeteoForecast();    
 }

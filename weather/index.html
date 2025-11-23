@@ -3,7 +3,6 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="../bbmain.css">
-
    </head>
           
     <script src="weather.js"></script>
@@ -18,10 +17,9 @@
     <div id="bbmain">
 
       <p>
-        Retrieves the latest weather report and forecast for a
-        location. The feature requires an Open Weather Map API KEY,
-        you can get one for free from <a href="https://home.openweathermap.org/users/sign_up">this link</a>,
-        enter the key below.
+        Click on 'current' to get the current geo location, or
+        'picker' to pick a different location. Go will output the
+        current weather and a forecast.
       </p>
       
       <p>
@@ -29,9 +27,7 @@
         &nbsp;
         <button onclick="getLocationFromPicker()">Picker</button>
         &nbsp;
-        <button onclick="getWeatherData()">Weather</button>
-        &nbsp;
-        <button onclick="getPollution()">AQI</button>
+        <button onclick="getWeatherData()">Go</button>
       </p>
       
       <div id="weatherposition"></div>
@@ -40,16 +36,13 @@
 
       <div id='fcout'></div><br/>
             
-      <input id="owm_key" type="text" name="owmkey"/>
-      
       <p>
-        <a href="#" onclick="hardCodePosition(40.20525328267196, 29.00177170590449)">Bursa</a>,
-        <a href="#" onclick="hardCodePosition(40.97180738437777, 29.067579924011557)">Istanbul</a>,
-        <a href="#" onclick="hardCodePosition(38.428435348186994, 27.166544793257003)">Izmir</a>
+        <a href="#" onclick="hardCodePosition(40.20490394493967, 29.005404450911993)">Bursa</a>,
+        <a href="#" onclick="hardCodePosition(40.97180738437777, 29.067579924011557)">Istanbul</a>
       </p>
       
-      <button onclick="set_owm_key()">Set</button>
-            
+      <div id="container-d84f574876e65b2d8f0c7bae784c22b3"></div>
+      
       <div><br/><a href="../index.html">Up</a></div>
       
     </div>
