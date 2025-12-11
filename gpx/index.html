@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../bbmain.css"> 
+    <style>
+      /* Basic styling for the new elements */
+      textarea {
+        width: 100%;
+        min-height: 200px;
+        font-family: monospace;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      pre {
+        background-color: #eee;
+        padding: 10px;
+        white-space: pre-wrap; /* Ensures the XML wraps */
+        word-break: break-all;
+      }
+      .download-button {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <script src="gpx.js"></script>
+      
+  <body onload='init()'>
+    
+    <div class="bbheader">
+      <h1><a href="..">BBApps</a></h1>
+      <p>CSV to GPX Converter</p>
+    </div>
+
+    <div id="bbmain">
+
+      <label for="coords_input">Enter Latitude and Longitude (one pair per line, separated by comma or space):</label>
+      <textarea id="coords_input" placeholder="e.g.,
+41.328127, 28.737938
+41.330000 28.740000"></textarea>
+      &nbsp;
+      
+      <button onclick="convertToGpx()">Convert to GPX</button>      
+      
+      <div id="output_area">
+        
+      </div>
+      
+    </div>
+
+  </body>
+</html>
