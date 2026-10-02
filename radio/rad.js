@@ -18,9 +18,20 @@ function init() {
 
 function play() {
     var id = document.getElementById("station_id").value;
-    console.log(id);
-    var station_name = id;
     var station_url = urls[id];
-    var out = `<p>${station_name}</p><p><audio controls="controls" src="${station_url}"></audio></p>`;
-    document.getElementById("station").innerHTML = out;    
+    
+    // Select the existing HTML audio element
+    var player = document.getElementById("audio_player");
+    
+    // Stop current stream, update source, and play programmatically
+    player.pause();
+    player.src = station_url;
+    player.load();
+    
+    var playPromise = player.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(function(error) {
+            console.error("Browser blocked playback:", error);
+        });
+    }
 }
